@@ -1,0 +1,11 @@
+{% extends 'control_panel/base.html' %}
+
+{% block admin_title %}
+    Members
+{% endblock %}
+
+{% block admin_css_link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/members.css') }}">
+{% endblock %}
