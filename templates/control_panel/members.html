@@ -9,3 +9,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/members.css') }}">
 {% endblock %}
+
+{% block admin_content %}
+    <body>
+        {% if dictionary['lang'] == 'ar' %}
+            <style>* {direction: rtl;}</style>
+        {% else %}
+            <style>* {direction: ltr;}</style>
+        {% endif %}
+
+        {% with args=[session['fullname'], dictionary, 'members'] %}
+            {% include 'control_panel/navbar.html' %}
+        {% endwith %}
+    </body>
+{% endblock %}

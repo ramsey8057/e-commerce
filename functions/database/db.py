@@ -10,9 +10,25 @@ def connect_to_db():
     )
     return con
 
-def execute_query(con, query):
+def execute_dql_query(con, query):
     # create a cursor
     cur = con.cursor()
     cur.execute(query)
     rows = cur.fetchall()
     return rows # gonna return array of tubles
+
+def execute_dml_query(con, query):
+    cur = con.cursor()
+    cur.execute(query)
+    con.commit()
+    return cur.rowcount
+
+def get_user(user_id):
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT * FROM users WHERE user_id = {}'.format(
+            user_id,
+        )
+    )
+    return row[0]

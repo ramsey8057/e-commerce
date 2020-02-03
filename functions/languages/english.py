@@ -11,4 +11,10 @@ lang = {
     'STATISTICS'                 : 'Statistics',
     'LOGS'                       : 'logs',
     'CHANGE_LANGUAGE'            : 'Change Language',
+    'EDIT_MEMBER'                : 'Edit Member',
+    'USERNAME'                   : 'Username',
+    'PASSWORD'                   : 'Password',
+    'EMAIL'                      : 'Email',
+    'FULL_NAME'                  : 'Full Name',
+    'SAVE'                       : 'Save',
 }

@@ -11,4 +11,10 @@ lang = {
     'STATISTICS'                 : 'الإحصائيات',
     'LOGS'                       : 'السجلات',
     'CHANGE_LANGUAGE'            : 'تغيير اللغة',
+    'EDIT_MEMBER'                : 'تحرير عضو',
+    'USERNAME'                   : 'اسم المستخدم',
+    'PASSWORD'                   : 'كلمه السر',
+    'EMAIL'                      : 'البريد الإلكتروني',
+    'FULL_NAME'                  : 'الاسم الكامل',
+    'SAVE'                       : 'Save',
 }

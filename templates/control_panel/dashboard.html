@@ -7,17 +7,18 @@
 {% block admin_css_link %}
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
 {% endblock %}
 
 {% block admin_content %}
-    {% if dictionary['lang'] == 'ar' %}
-        <style>* {direction: rtl;}</style>
-    {% else %}
-        <style>* {direction: ltr;}</style>
-    {% endif %}
+    <body>
+        {% if dictionary['lang'] == 'ar' %}
+            <style>* {direction: rtl;}</style>
+        {% else %}
+            <style>* {direction: ltr;}</style>
+        {% endif %}
 
-    <body dir="rtl">
-        {% with args=[ session['fullname'], dictionary] %}
+        {% with args=[session['fullname'], dictionary, 'dashboard'] %}
             {% include 'control_panel/navbar.html' %}
         {% endwith %}
 
