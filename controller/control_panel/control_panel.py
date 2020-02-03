@@ -212,3 +212,103 @@ def edit_member():
                     return redirect(url_for('.members', do='edit', edit_done=False, err_msg=lang['PASSWORD_ERR_MSG'], note=lang['PASSWORD_NOTE']))
                 # TODO: redirect to the 503 page
                 return abort(503)
+
+@control_panel.route('/admin/members/add_member', methods=['POST',])
+def add_member():
+    if request.method == 'POST':
+        user_id    = get_new_id()
+        username   = ''
+        password   = ''
+        cpassword  = ''
+        email      = ''
+        full_name  = ''
+        group_id   = ''
+        reg_status = ''
+        try:
+            # fetch the data from the request
+            username   = request.form['username']
+            username   = username.strip()
+            password   = request.form['password']
+            password   = password.strip()
+            cpassword  = request.form['cpassword']
+            cpassword  = cpassword.strip()
+            email      = request.form['email']
+            full_name  = request.form['fullname']
+            group_id   = request.form.get('group_id')
+            reg_status = request.form.get('reg_status')
+            # validate the inputs
+            print(reg_status)
+            print(group_id)
+            if group_id == 'on':
+                group_id = 1
+            else:
+                group_id = 0
+            if reg_status == 'on':
+                reg_status = 1
+            else:
+                reg_status = 0
+            if len(username) < 3 or username == '':
+                raise Exception('invalid username')
+            else:
+                if len(password) < 8 or len(password) > 20:
+                    raise Exception('invalid password')
+                else:
+                    if cpassword != password:
+                        raise Exception('invalid cpassword')
+                    else:
+                        if len(full_name) < 7 or full_name.strip() == '':
+                            raise Exception('invalid full name')
+            # encode the password
+            h         = hashlib.md5(password.encode())
+            password  = h.hexdigest()
+            h         = hashlib.md5(cpassword.encode())
+            cpassword = h.hexdigest()
+            # connect to the database and insert the user
+            con = connect_to_db()
+            rowcount = execute_dml_query(
+                con,
+                'INSERT INTO users (user_id, username, password, email, fullname, group_id, reg_status) VALUES ({}, \'{}\', \'{}\', \'{}\', \'{}\', {}, {})'.format(
+                    user_id,
+                    username,
+                    password,
+                    email,
+                    full_name,
+                    group_id,
+                    reg_status
+                )
+            )
+            if rowcount >= 1:
+                print(reg_status)
+                print(group_id)
+                return redirect(url_for('.members', do='add', add_done=True))
+            else:
+                return redirect(url_for('.members', do='add', add_done=False))
+        except Exception as e:
+            e = str(e)
+            lang = ''
+            if session['language'] == 'ar':
+                lang = ar
+            else:
+                lang = en
+            if 'already exists' in e:
+                if 'username' in e:
+                    return redirect(url_for('.members', do='add', add_done=False,
+                                            err_msg='{} "{}" {}'.format(lang['USERNAME'], username,
+                                                                        lang['NOT_AVAILABLE'])))
+                elif 'email' in e:
+                    return redirect(url_for('.members', do='add', add_done=False,
+                                            err_msg='{} "{}" {}'.format(lang['EMAIL'], email,
+                                                                        lang['NOT_AVAILABLE'])))
+            else:
+                if e == 'invalid username':
+                    return redirect(url_for('.members', do='add', add_done=False, err_msg=lang['USERNAME_ERR_MSG'], note=lang['USERNAME_NOTE']))
+                elif e == 'invalid full name':
+                    return redirect(url_for('.members', do='add', add_done=False, err_msg=lang['FULL_NAME_ERR_MSG'],
+                                            note=lang['FULL_NAME_NOTE']))
+                elif e == 'invalid password':
+                    return redirect(url_for('.members', do='add', add_done=False, err_msg=lang['PASSWORD_ERR_MSG'],
+                                            note=lang['PASSWORD_NOTE']))
+                elif e == 'invalid cpassword':
+                    return redirect(url_for('.members', do='add', add_done=False, err_msg=lang['CPASSWORD_ERR_MSG']))
+                # TODO: redirect to the 503 page
+                return abort(503)
