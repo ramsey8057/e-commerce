@@ -147,8 +147,9 @@ def edit_member():
             if len(username) < 3 or username == '':
                 raise Exception('invalid username')
             else:
-                if len(password) < 8 or len(password) > 20:
-                    raise Exception('invalid password')
+                if password != '':
+                    if len(password) < 8 or len(password) > 20:
+                        raise Exception('invalid password')
                 else:
                     if len(full_name) < 7 or full_name.strip() == '':
                         raise Exception('invalid full name')
@@ -187,17 +188,22 @@ def edit_member():
                 return redirect(url_for('.members', do='edit', edit_done=False))
         except Exception as e:
             e = str(e)
+            lang = ''
+            if session['language'] == 'ar':
+                lang = ar
+            else:
+                lang = en
             if 'already exists' in e:
                 if 'username' in e:
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='Username "{}" is not avaliable'.format(username)))
+                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='{} "{}" {}'.format(lang['USERNAME'], username, lang['NOT_AVALIABLE'])))
                 elif 'email' in e:
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='Email "{}" is not avaliable'.format(username)))
+                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='{} "{}" {}'.format(lang['EMAIL'], email, lang['NOT_AVALIABLE'])))
             else:
                 if e == 'invalid username':
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='Username must be bigger than 3 characters', note='Note that username spaces will be terminated'))
+                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg=lang['USERNAME_ERR_MSG'], note=lang['USERNAME_NOTE']))
                 elif e == 'invalid full name':
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='Full name must be bigger than 7 characters', note='Note that full name spaces willn\'t be terminated'))
+                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg=lang['FULL_NAME_ERR_MSG'], note=lang['FULL_NAME_NOTE']))
                 elif e == 'invalid password':
-                    return redirect(url_for('.members',do='edit', edit_done=False, err_msg='Password must be bigger than 8 and smaller than 25 characters', note='Note that password spaces will be terminated'))
+                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg=lang['PASSWORD_ERR_MSG'], note=lang['PASSWORD_NOTE']))
                 # TODO: redirect to the 503 page
                 return abort(503)

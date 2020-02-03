@@ -12,12 +12,6 @@
 
 {% block admin_content %}
     <body>
-        {% if dictionary['lang'] == 'ar' %}
-            <style>* {direction: rtl;}</style>
-        {% else %}
-            <style>* {direction: ltr;}</style>
-        {% endif %}
-
         {% with args=[session['fullname'], dictionary, 'members'] %}
             {% include 'control_panel/navbar.html' %}
         {% endwith %}
@@ -57,7 +51,7 @@
                 <div class="foorm-group row" style="padding-bottom: 15px;">
                     <label class="col-sm-2 col-form-label">{{ dictionary['PASSWORD'] }}</label>
                     <div class="col-sm-10">
-                        <input type="password" name="password" class="form-control form-control-lg" autocomplete="new-password" placeholder="leave it empty if don't wanna change the password" />
+                        <input type="password" name="password" class="form-control form-control-lg" autocomplete="new-password" placeholder="{{ dictionary['LEAVE_PASSWORD_EMPTY'] }}" />
                     </div>
                 </div>
                 <!-- email field -->

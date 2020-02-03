@@ -17,4 +17,12 @@ lang = {
     'EMAIL'                      : 'Email',
     'FULL_NAME'                  : 'Full Name',
     'SAVE'                       : 'Save',
+    'LEAVE_PASSWORD_EMPTY'       : 'Leave it empty if don\'t wanna change the password',
+    'NOT_AVALIABLE'              : 'is not avaliable',
+    'USERNAME_ERR_MSG'           : 'Username must be bigger than 3 characters',
+    'USERNAME_NOTE'              : 'Note that username spaces will be terminated',
+    'FULL_NAME_ERR_MSG'          : 'Full name must be bigger than 7 characters',
+    'FULL_NAME_NOTE'             : 'Note that full name spaces willn\'t be terminated',
+    'PASSWORD_ERR_MSG'           : 'Password must be bigger than 8 and smaller than 25 characters',
+    'PASSWORD_NOTE'              : 'Note that password spaces will be terminated',
 }

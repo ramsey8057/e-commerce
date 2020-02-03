@@ -12,11 +12,6 @@
 
 {% block admin_content %}
     <body>
-        {% if dictionary['lang'] == 'ar' %}
-            <style>* {direction: rtl;}</style>
-        {% else %}
-            <style>* {direction: ltr;}</style>
-        {% endif %}
 
         {% with args=[session['fullname'], dictionary, 'dashboard'] %}
             {% include 'control_panel/navbar.html' %}
