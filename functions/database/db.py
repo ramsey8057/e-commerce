@@ -32,3 +32,11 @@ def get_user(user_id):
         )
     )
     return row[0]
+
+def get_new_id():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1'
+    )
+    return (row[0][0] + 1)

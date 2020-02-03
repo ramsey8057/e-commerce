@@ -20,7 +20,7 @@
         <div class="container ">
             {% if edit_done == 'True' %}
                 <div class="alert alert-success" role="alert">
-                User updated successfully :)
+                {{ dictionary['UPDATE_USER_DONE_MSG'] }} :)
                 </div>
             {% elif edit_done == 'False' %}
                 {% if err_msg %}
@@ -34,13 +34,13 @@
                     {% endif %}
                 {% else %}
                     <div class="alert alert-danger" role="alert">
-                    Update user failed :(
+                    {{ dictionary['UPDATE_USER_FAILED_MSG'] }} :(
                     </div>
                 {% endif %}
             {% endif %}
             <form action="members/edit_member" method="POST" class="form-horizontal">
                 <!-- username field -->
-                <div class="foorm-group row" style="padding-bottom: 15px;">
+                <div class="form-group row" style="padding-bottom: 15px;">
                     <label class="col-sm-2 col-form-label">{{ dictionary['USERNAME'] }}</label>
                     <div class="col-sm-10">
                         <input type="text" name="username" class="form-control form-control-lg" autocomplete="off" value="{{ user_data[1] }}" required />
@@ -48,14 +48,14 @@
                     </div>
                 </div>
                 <!-- password field -->
-                <div class="foorm-group row" style="padding-bottom: 15px;">
+                <div class="form-group row" style="padding-bottom: 15px;">
                     <label class="col-sm-2 col-form-label">{{ dictionary['PASSWORD'] }}</label>
                     <div class="col-sm-10">
                         <input type="password" name="password" class="form-control form-control-lg" autocomplete="new-password" placeholder="{{ dictionary['LEAVE_PASSWORD_EMPTY'] }}" />
                     </div>
                 </div>
                 <!-- email field -->
-                <div class="foorm-group row" style="padding-bottom: 15px;">
+                <div class="form-group row" style="padding-bottom: 15px;">
                     <label class="col-sm-2 col-form-label">{{ dictionary['EMAIL'] }}</label>
                     <div class="col-sm-10">
                         <input type="email" name="email" class="form-control form-control-lg" value="{{ user_data[3] }}" required />
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <!-- full name field -->
-                <div class="foorm-group row" style="padding-bottom: 15px;">
+                <div class="form-group row" style="padding-bottom: 15px;">
                     <label class="col-sm-2 col-form-label">{{ dictionary['FULL_NAME'] }}</label>
                     <div class="col-sm-10">
                         <input type="text" name="fullname" class="form-control form-control-lg" value="{{ user_data[4] }}" required />
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <!-- submit field -->
-                <div class="foorm-group">
+                <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <input type="submit" value="{{ dictionary['SAVE'] }}" class="btn btn-primary btn-lg" />
                     </div>

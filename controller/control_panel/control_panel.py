@@ -1,10 +1,8 @@
-import os
 import hashlib
 from flask import Blueprint, render_template, abort, redirect, url_for, request, session
-from jinja2 import TemplateNotFound
 from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
-from functions.database.db import connect_to_db, execute_dql_query, execute_dml_query, get_user
+from functions.database.db import connect_to_db, execute_dql_query, execute_dml_query, get_user, get_new_id
 
 control_panel = Blueprint('control_panel', __name__, template_folder='templates')
 
@@ -111,17 +109,24 @@ def members():
             else:
                 lang = en
             do = request.args.get('do')
-            if do == 'manage':
-                pass
+            if do == None:
+                return render_template('control_panel/members.html', dictionary=lang, session=session)
             elif do == 'edit':
                 user_data = get_user(session['user_id'])
                 edit_done = request.args.get('edit_done')
                 err_msg   = request.args.get('err_msg')
                 note      = request.args.get('note')
                 return render_template('control_panel/edit_member.html', dictionary=lang, session=session, user_data=user_data, edit_done=edit_done, err_msg=err_msg, note=note)
+            elif do == 'add':
+                user_data = get_user(session['user_id'])
+                add_done = request.args.get('add_done')
+                err_msg   = request.args.get('err_msg')
+                note      = request.args.get('note')
+                return render_template('control_panel/add_member.html', dictionary=lang, add_done=add_done, err_msg=err_msg, note=note)
         else:
             return redirect(url_for('.index'))
-    except:
+    except Exception as e:
+        print(e)
         try:
             return redirect(url_for('.index'))
         except:
@@ -156,7 +161,7 @@ def edit_member():
             # encode the password
             h = hashlib.md5(password.encode())
             password = h.hexdigest()
-            # connect to the database and check the users
+            # connect to the database and update the user
             con = connect_to_db()
             rowcount = 0
             if password != '':
@@ -195,9 +200,9 @@ def edit_member():
                 lang = en
             if 'already exists' in e:
                 if 'username' in e:
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='{} "{}" {}'.format(lang['USERNAME'], username, lang['NOT_AVALIABLE'])))
+                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='{} "{}" {}'.format(lang['USERNAME'], username, lang['NOT_AVAILABLE'])))
                 elif 'email' in e:
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='{} "{}" {}'.format(lang['EMAIL'], email, lang['NOT_AVALIABLE'])))
+                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='{} "{}" {}'.format(lang['EMAIL'], email, lang['NOT_AVAILABLE'])))
             else:
                 if e == 'invalid username':
                     return redirect(url_for('.members', do='edit', edit_done=False, err_msg=lang['USERNAME_ERR_MSG'], note=lang['USERNAME_NOTE']))

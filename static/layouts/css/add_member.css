@@ -1,0 +1,24 @@
+/* start members page */
+
+h1 {
+    font-size: 55px;
+    margin: 40px 0;
+    font-weight: bold;
+    color: #666;
+}
+
+.required {
+    font-size: 30px;
+    position: absolute;
+    right: 30px;
+    top: 8px;
+    color: #D20707;
+}
+
+.show-password {
+    position: absolute;
+    top: 6px;
+    right: -30px;
+}
+
+/* end members page */
