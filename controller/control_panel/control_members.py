@@ -36,7 +36,7 @@ def dashboard():
             pending_users_count = get_pending_users_count()
             latest_users = get_latest_registerd_users()
             return render_template(
-                'control_panel/members/dashboard.html',
+                'control_panel/dashboard.html',
                dictionary=lang,
                session=session,
                users_count=users_count,
@@ -176,7 +176,8 @@ def members():
                 return redirect(url_for('.members'))
         else:
             return redirect(url_for('.index'))
-    except:
+    except Exception as e:
+        print(e)
         try:
             return redirect(url_for('.index'))
         except:

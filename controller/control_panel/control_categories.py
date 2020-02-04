@@ -16,7 +16,15 @@ def categories():
                 lang = en
             do = request.args.get('do')
             if do == None:
-                return render_template('control_panel/categories/categories.html', dictionary=lang, session=session)
+                categories = get_all_categories()
+                deleted = request.args.get('deleted')
+                return render_template(
+                    'control_panel/categories/categories.html',
+                    dictionary=lang,
+                    session=session,
+                    categories=categories,
+                    deleted=deleted
+                )
             elif do == 'edit':
                 pass
             elif do == 'add':
@@ -78,6 +86,11 @@ def add_category():
             else:
                 if len(description) > 220:
                     raise Exception('invalid category description')
+                else:
+                    try:
+                        order = int(order)
+                    except:
+                        raise Exception('invalid category order')
             # connect to the database and insert the category
             con = connect_to_db()
             rowcount = execute_dml_query(
@@ -137,6 +150,8 @@ def add_category():
                 if e == 'invalid category name':
                     return redirect(url_for('.categories', do='add', add_done=False, err_msg=lang['CATEGORY_NAME_ERR_MSG']))
                 elif e == 'invalid category description':
+                    return redirect(url_for('.categories', do='add', add_done=False, err_msg=lang['CATEGORY_DESCRIPTION_ERR_MSG']))
+                elif e == 'invalid category order':
                     return redirect(url_for('.categories', do='add', add_done=False, err_msg=lang['CATEGORY_ORDER_ERR_MSG']))
             # TODO: redirect to the 503 page
             return abort(503)

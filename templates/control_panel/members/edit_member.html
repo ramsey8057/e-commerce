@@ -13,7 +13,7 @@
 {% block admin_content %}
     <body>
         {% with args=[session['fullname'], dictionary, 'members', session['user_id']] %}
-            {% include 'control_panel/members/navbar.html' %}
+            {% include 'control_panel/navbar.html' %}
         {% endwith %}
 
         <h1 class="text-center">{{ dictionary['EDIT_MEMBER'] }}</h1>

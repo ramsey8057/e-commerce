@@ -12,8 +12,42 @@
 
 {% block admin_content %}
     <body>
-        {% with args=[session['fullname'], dictionary, 'members', session['user_id']] %}
-            {% include 'control_panel/members/navbar.html' %}
+        {% with args=[session['fullname'], dictionary, 'categories', session['user_id']] %}
+            {% include 'control_panel/navbar.html' %}
         {% endwith %}
+        <h1 class="text-center">{{ dictionary['MANAGE_CATEGORIES'] }}</h1>
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ dictionary['MANAGE_CATEGORIES'] }}</div>
+            </div>
+            <div class="panel panel-body categories">
+                {% for i in categories %}
+                    <div class="category">
+                        <div class="hidden-buttons">
+                            <a href="#" class="btn btn-xs btn-info">
+                                <i class="fa fa-edit"></i>&nbsp;
+                                {{ dictionary['EDIT'] }}
+                            </a>
+                            <a href="#" class="btn btn-xs btn-danger">
+                                <i class="fa fa-times"></i>&nbsp;
+                                {{ dictionary['EDIT'] }}
+                            </a>
+                        </div>
+                        <h3>{{ i[1] }}</h3>
+                        <p>{{ i[2] }}</p>
+                        {% if i[4] == 0 %}
+                            <span class="visibility">{{ dictionary['HIDDEN'] }}</span>
+                        {% endif %}
+                        {% if i[5] == 0 %}
+                            <span class="commenting">{{ dictionary['COMMENTS_DISABLED'] }}</span>
+                        {% endif %}
+                        {% if i[6] == 0 %}
+                            <span class="ads">{{ dictionary['ADS_DISABLED'] }}</span>
+                        {% endif %}
+                    </div>
+                    <hr />
+                {% endfor %}
+            </div>
+        </div>
     </body>
 {% endblock %}

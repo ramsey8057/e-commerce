@@ -48,7 +48,7 @@ def get_all_users():
     con = connect_to_db()
     row = execute_dql_query(
         con,
-        'SELECT user_id, username, email, fullname, registration_date, reg_status FROM members ORDER BY user_id LIMIT 100'
+        'SELECT user_id, username, email, fullname, registration_date, reg_status FROM users ORDER BY user_id LIMIT 100'
     )
     con.close()
     return row
@@ -113,3 +113,21 @@ def get_new_category_id():
     if row == []:
         return 1
     return (row[0][0] + 1)
+
+def get_all_categories():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT * FROM categories ORDER BY category_order LIMIT 100'
+    )
+    con.close()
+    return row
+
+def get_categories_count():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT COUNT(category_id) FROM categories'
+    )
+    con.close()
+    return row[0][0]

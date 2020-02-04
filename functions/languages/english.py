@@ -68,7 +68,12 @@ lang = {
     'ADD_CATEGORY_FAILED_MSG'                           : 'Add category failed',
     'CATEGORY'                                          : 'Category',
     'CATEGORY_NAME_ERR_MSG'                             : 'Category name must be smaller than 50 characters',
-    'CATEGORY_ORDER_ERR_MSG'                            : 'Category description must be smaller than 220 characters',
+    'CATEGORY_DESCRIPTION_ERR_MSG'                      : 'Category description must be smaller than 220 characters',
     'ADD_USER_SUCCESS'                                  : 'User added successfully',
     'ADD_CATEGORY_SUCCESS'                              : 'Category added successfully',
+    'CATEGORY_ORDER_ERR_MSG'                            : 'Invalid category order the field should contain only integers',
+    'MANAGE_CATEGORIES'                                 : 'Manage Categories',
+    'HIDDEN'                                            : 'Hidden',
+    'COMMENTS_DISABLED'                                 : 'Comments Disabled',
+    'ADS_DISABLED'                                      : 'Ads Disabled',
 }

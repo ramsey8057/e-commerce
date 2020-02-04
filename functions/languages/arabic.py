@@ -68,7 +68,12 @@ lang = {
     'ADD_CATEGORY_FAILED_MSG'                           : 'فشل إضافة صنف',
     'CATEGORY'                                          : 'الصنف',
     'CATEGORY_NAME_ERR_MSG'                             : 'يجب أن يكون اسم الصنف أصغر من 50 حرفًا',
-    'CATEGORY_ORDER_ERR_MSG'                            : 'يجب أن يكون وصف الفئة أصغر من 220 حرفًا',
+    'CATEGORY_DESCRIPTION_ERR_MSG'                      : 'يجب أن يكون وصف الفئة أصغر من 220 حرفًا',
     'ADD_USER_SUCCESS'                                  : 'تمت إضافة المستخدم بنجاح',
     'ADD_CATEGORY_SUCCESS'                              : 'تمت إضافة الصنف بنجاح',
+    'CATEGORY_ORDER_ERR_MSG'                            : 'ترتيب فئة غير صالح يجب أن يحتوي الحقل على أعداد صحيحة فقط',
+    'MANAGE_CATEGORIES'                                 : 'إدارة الفئات',
+    'HIDDEN'                                            : 'مخفي',
+    'COMMENTS_DISABLED'                                 : 'التعليقات معطلة',
+    'ADS_DISABLED'                                      : 'الإعلانات معطلة',
 }
