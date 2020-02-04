@@ -27,6 +27,16 @@ h1 {
     min-height: 120px;
 }
 
+.categories .ordering a {
+    color: #888;
+    text-decoration: none;
+}
+
+.categories .ordering .active {
+    color: #c0392b;
+    font-weight: bold;
+}
+
 .categories .category:hover {
     background-color: #EEE;
 }

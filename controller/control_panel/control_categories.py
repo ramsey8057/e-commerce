@@ -16,14 +16,18 @@ def categories():
                 lang = en
             do = request.args.get('do')
             if do == None:
-                categories = get_all_categories()
+                sort = request.args.get('sort')
+                if sort != 'ASC' and sort != 'DESC':
+                    sort = 'ASC'
+                categories = get_all_categories(sort)
                 deleted = request.args.get('deleted')
                 return render_template(
                     'control_panel/categories/categories.html',
                     dictionary=lang,
                     session=session,
                     categories=categories,
-                    deleted=deleted
+                    deleted=deleted,
+                    sort=sort,
                 )
             elif do == 'edit':
                 pass
@@ -43,7 +47,8 @@ def categories():
                 return redirect(url_for('.categories'))
         else:
             return redirect('/admin')
-    except:
+    except Exception as e:
+        print(e)
         try:
             return redirect('/admin')
         except:

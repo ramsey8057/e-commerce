@@ -114,11 +114,11 @@ def get_new_category_id():
         return 1
     return (row[0][0] + 1)
 
-def get_all_categories():
+def get_all_categories(sort):
     con = connect_to_db()
     row = execute_dql_query(
         con,
-        'SELECT * FROM categories ORDER BY category_order LIMIT 100'
+        'SELECT * FROM categories ORDER BY category_order {} LIMIT 100'.format(sort)
     )
     con.close()
     return row

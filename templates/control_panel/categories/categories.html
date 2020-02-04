@@ -16,11 +16,23 @@
             {% include 'control_panel/navbar.html' %}
         {% endwith %}
         <h1 class="text-center">{{ dictionary['MANAGE_CATEGORIES'] }}</h1>
-        <div class="container">
+        <div class="container categories">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ dictionary['MANAGE_CATEGORIES'] }}</div>
+                <div class="panel-heading">
+                    {{ dictionary['MANAGE_CATEGORIES'] }}
+                    <div class="ordering pull-right">
+                        Ordering:&nbsp;
+                        {% if sort == 'ASC' %}
+                            <a class="active" href="?sort=ASC">ASC</a>&nbsp;|
+                            <a href="?sort=DESC">DESC</a>
+                        {% else %}
+                            <a href="?sort=ASC">ASC</a>&nbsp;|
+                            <a class="active" href="?sort=DESC">DESC</a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="panel panel-body categories">
+            <div class="panel panel-body">
                 {% for i in categories %}
                     <div class="category">
                         <div class="hidden-buttons">
