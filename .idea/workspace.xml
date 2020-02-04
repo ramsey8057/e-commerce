@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3386d24d-b801-4ff5-bbc7-d52d26f17769" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/runtime.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/layouts/css/dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/control_panel/control_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/control_panel/control_panel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-commerce.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/database/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/database/db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/languages/arabic.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/languages/arabic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/languages/english.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/languages/english.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/control_panel/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/control_panel/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/control_panel/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/control_panel/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/control_panel/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/control_panel/navbar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,11 +21,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Procfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="35" selection-start-column="35" selection-end-column="35" />
+            <state relative-caret-position="23">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="276">
+              <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -77,6 +77,7 @@
         <option value="$PROJECT_DIR$/e-commerce.py" />
         <option value="$PROJECT_DIR$/runtime.txt" />
         <option value="$PROJECT_DIR$/Procfile" />
+        <option value="$PROJECT_DIR$/app.py" />
       </list>
     </option>
   </component>
@@ -154,12 +155,12 @@
       <option name="presentableId" value="Default" />
       <updated>1580754085951</updated>
       <workItem from="1580754087499" duration="81000" />
-      <workItem from="1580754177844" duration="18040000" />
+      <workItem from="1580754177844" duration="18216000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18121000" />
+    <option name="totallyTimeSpent" value="18297000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="2560" height="1324" extended-state="6" />
@@ -307,16 +308,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/functions/languages/english.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1066">
@@ -364,8 +355,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Procfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="35" selection-start-column="35" selection-end-column="35" />
+        <state relative-caret-position="23">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

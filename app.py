@@ -6,7 +6,21 @@ e_commerce = Flask(__name__)
 e_commerce.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://mhqvluwu:SoaOFudyzAgBywON6U3P6vIq02kyC5J5@rajje.db.elephantsql.com/mhqvluwu'
 e_commerce.secret_key = 'DevAhmed2772003@#'
 # register blueprints
-e_commerce.register_blueprint(control_panel) 
+e_commerce.register_blueprint(control_panel)
+# create the index page
+@e_commerce.route('/')
+def index():
+    return """
+    <!doctype HTML>
+    <html>
+        <head>
+            <title>Index Page</title>
+        </head>
+        <body>
+            <h1>Hello this is my e-commerce app</h1>
+        </body>
+    </html>
+    """
 
 if __name__ == '__main__':
     e_commerce.run()
