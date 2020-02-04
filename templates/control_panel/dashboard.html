@@ -12,7 +12,6 @@
 
 {% block admin_content %}
     <body>
-
         {% with args=[session['fullname'], dictionary, 'dashboard', session['user_id']] %}
             {% include 'control_panel/navbar.html' %}
         {% endwith %}
@@ -46,29 +45,45 @@
                 </div>
             </div>
         </div>
-    <div class="container latest">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <i class="fa fa-users"></i> {{ dictionary['LATEST_REGISTERED_USERS'] }}
-                    </div>
-                    <div class="panel-body">
-                        Test
+        <div class="container latest">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-users"></i> {{ dictionary['LATEST_REGISTERED_USERS'] }}
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-unstyled latest-users">
+                                {% for i in latest_users %}
+                                    <li>
+                                        {{ i[1] }}&nbsp;
+                                        <span class="btn btn-success pull-right">
+                                            <i class="fa fa-edit"></i>&nbsp;
+                                            <a href="/admin/members?do=edit&user_id={{ i[0] }}">{{ dictionary['EDIT'] }}</a>
+                                        </span>
+                                        {% if i[2] == 0 %}
+                                            <span class="btn btn-info pull-right">
+                                                <i class="fa fa-check"></i>&nbsp;
+                                                <a href="/admin/members?do=activate&user_id={{ i[0] }}">{{ dictionary['ACTIVATE'] }}</a>
+                                            </span>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <i class="fa fa-tag"></i> {{ dictionary['LATEST_ITEMS'] }}
-                    </div>
-                    <div class="panel-body">
-                        Test
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-tag"></i> {{ dictionary['LATEST_ITEMS'] }}
+                        </div>
+                        <div class="panel-body">
+                            Test
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </body>
 {% endblock %}

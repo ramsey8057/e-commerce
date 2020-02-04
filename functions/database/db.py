@@ -88,6 +88,7 @@ def ac_member(user_id):
             user_id
         )
     )
+    con.commit()
     con.close()
     return row[0][0]
 
@@ -95,6 +96,7 @@ def get_latest_registerd_users():
     con = connect_to_db()
     row = execute_dql_query(
         con,
-        'SELECT * FROM users LIMIT 5'
+        'SELECT user_id, fullname, reg_status FROM users ORDER BY user_id LIMIT 5'
     )
     con.close()
+    return row

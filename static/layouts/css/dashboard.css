@@ -51,19 +51,46 @@ h1 {
 }
 
 .home-stats .st-members {
-    background-color: #3498DB;
+    background-color: #16a085;
 }
 
 .home-stats .st-pending {
-    background-color: #c0392b;
+    background-color: #f39c12;
 }
 
 .home-stats .st-items {
-    background-color: #d35400;
+    background-color: #3498db;
 }
 
 .home-stats .st-comments {
-    background-color: #8e44ad;
+    background-color: #2c3e50;
+}
+
+.latest-users {
+    margin-bottom: 0;
+}
+
+.latest-users .btn-info {
+    margin-right: 5px;
+}
+
+.latest-users li {
+    padding: 8px;
+    overflow: hidden;
+}
+
+.latest-users li a {
+    text-decoration: none;
+    color: #FFF;
+}
+
+.latest-users li a:hover {
+    text-decoration: none;
+    color: #FFF;
+}
+
+.latest-users li:nth-child(even) {
+    background-color: #EEE;
 }
 
 /* end dashboard page */

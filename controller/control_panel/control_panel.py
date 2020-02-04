@@ -34,12 +34,14 @@ def dashboard():
                 lang = en
             users_count = get_users_count()
             pending_users_count = get_pending_users_count()
+            latest_users = get_latest_registerd_users()
             return render_template(
                 'control_panel/dashboard.html',
                dictionary=lang,
                session=session,
                users_count=users_count,
-               pending_users_count=pending_users_count
+               pending_users_count=pending_users_count,
+                latest_users=latest_users
            )
         else:
             return redirect(url_for('.index'))
@@ -122,14 +124,31 @@ def members():
                 users = get_all_users()
                 deleted = request.args.get('deleted')
                 activated = request.args.get('activated')
-                return render_template('control_panel/members.html', dictionary=lang, session=session, users=users, deleted=deleted, activated=activated, pending=False)
+                return render_template(
+                    'control_panel/members.html',
+                    dictionary=lang,
+                    session=session,
+                    users=users,
+                    deleted=deleted,
+                    activated=activated,
+                    pending=False
+                )
             elif do == 'edit':
                 user_id = request.args['user_id']
                 user_data = get_user(user_id)
                 edit_done = request.args.get('edit_done')
                 err_msg   = request.args.get('err_msg')
                 note      = request.args.get('note')
-                return render_template('control_panel/edit_member.html', dictionary=lang, session=session, user_id=user_id, user_data=user_data, edit_done=edit_done, err_msg=err_msg, note=note)
+                return render_template(
+                    'control_panel/edit_member.html',
+                    dictionary=lang,
+                    session=session,
+                    user_id=user_id,
+                    user_data=user_data,
+                    edit_done=edit_done,
+                    err_msg=err_msg,
+                    note=note
+                )
             elif do == 'add':
                 add_done = request.args.get('add_done')
                 err_msg   = request.args.get('err_msg')
@@ -143,7 +162,15 @@ def members():
                 users = get_all_users()
                 deleted = request.args.get('deleted')
                 activated = request.args.get('activated')
-                return render_template('control_panel/members.html', dictionary=lang, session=session, users=users, deleted=deleted, activated=activated, pending=True)
+                return render_template(
+                    'control_panel/members.html',
+                    dictionary=lang,
+                    session=session,
+                    users=users,
+                    deleted=deleted,
+                    activated=activated,
+                    pending=True
+                )
             else:
                 user_id = request.args['user_id']
                 return redirect(url_for('.members'))
@@ -253,11 +280,38 @@ def edit_member():
                     )
             else:
                 if e == 'invalid username':
-                    return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg=lang['USERNAME_ERR_MSG'], note=lang['USERNAME_NOTE']))
+                    return redirect(
+                        url_for(
+                            '.members',
+                            do='edit',
+                            user_id=user_id,
+                            edit_done=False,
+                            err_msg=lang['USERNAME_ERR_MSG'],
+                            note=lang['USERNAME_NOTE']
+                        )
+                    )
                 elif e == 'invalid full name':
-                    return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg=lang['FULL_NAME_ERR_MSG'], note=lang['FULL_NAME_NOTE']))
+                    return redirect(
+                        url_for(
+                            '.members',
+                            do='edit',
+                            user_id=user_id,
+                            edit_done=False,
+                            err_msg=lang['FULL_NAME_ERR_MSG'],
+                            note=lang['FULL_NAME_NOTE']
+                        )
+                    )
                 elif e == 'invalid password':
-                    return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg=lang['PASSWORD_ERR_MSG'], note=lang['PASSWORD_NOTE']))
+                    return redirect(
+                        url_for(
+                            '.members',
+                            do='edit',
+                            user_id=user_id,
+                            edit_done=False,
+                            err_msg=lang['PASSWORD_ERR_MSG'],
+                            note=lang['PASSWORD_NOTE']
+                        )
+                    )
                 # TODO: redirect to the 503 page
                 return abort(503)
 
@@ -313,7 +367,10 @@ def add_member():
             con = connect_to_db()
             rowcount = execute_dml_query(
                 con,
-                'INSERT INTO users (user_id, username, password, email, fullname, group_id, reg_status, registration_date) VALUES ({}, \'{}\', \'{}\', \'{}\', \'{}\', {}, {}, \'{}\')'.format(
+                '''
+                INSERT INTO users (user_id, username, password, email, fullname, group_id, reg_status, registration_date)
+                VALUES ({}, \'{}\', \'{}\', \'{}\', \'{}\', {}, {}, \'{}\')
+                '''.format(
                     user_id,
                     username,
                     password,
@@ -328,6 +385,8 @@ def add_member():
                     ),
                 )
             )
+            # close the connection
+            con.close()
             if rowcount >= 1:
                 return redirect(url_for('.members', do='add', add_done=True))
             else:
