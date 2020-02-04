@@ -76,4 +76,5 @@ lang = {
     'HIDDEN'                                            : 'مخفي',
     'COMMENTS_DISABLED'                                 : 'التعليقات معطلة',
     'ADS_DISABLED'                                      : 'الإعلانات معطلة',
+    'NEW_CATEGORY'                                      : 'فئة جديدة',
 }

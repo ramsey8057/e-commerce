@@ -76,4 +76,5 @@ lang = {
     'HIDDEN'                                            : 'Hidden',
     'COMMENTS_DISABLED'                                 : 'Comments Disabled',
     'ADS_DISABLED'                                      : 'Ads Disabled',
+    'NEW_CATEGORY'                                      : 'New Category',
 }
