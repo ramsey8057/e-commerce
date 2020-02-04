@@ -23,13 +23,13 @@ $(function() {
         if(visible) {
 
              passField.attr('type', 'text');
-            $('.show-password').attr('class', 'show-password fas fa-eye-slash fa-2x');
+            $('.show-password').attr('class', 'show-password fa fa-eye-slash fa-2x');
             visible = false;
 
         } else {
 
             passField.attr('type', 'password');
-            $('.show-password').attr('class', 'show-password fas fa-eye fa-2x');
+            $('.show-password').attr('class', 'show-password fa fa-eye fa-2x');
             visible = true;
 
         }

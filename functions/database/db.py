@@ -39,6 +39,7 @@ def get_new_id():
         con,
         'SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1'
     )
+    con.close()
     return (row[0][0] + 1)
 
 def get_all_users():
@@ -47,6 +48,7 @@ def get_all_users():
         con,
         'SELECT user_id, username, email, fullname, registration_date, reg_status FROM users ORDER BY user_id LIMIT 100'
     )
+    con.close()
     return row
 
 def del_member(user_id):
@@ -57,6 +59,7 @@ def del_member(user_id):
             user_id
         )
     )
+    con.close()
     return row
 
 def get_users_count():
@@ -65,6 +68,7 @@ def get_users_count():
         con,
         'SELECT COUNT(user_id) FROM users'
     )
+    con.close()
     return row[0][0]
 
 def get_pending_users_count():
@@ -73,6 +77,7 @@ def get_pending_users_count():
         con,
         'SELECT COUNT(user_id) FROM users WHERE reg_status = 0'
     )
+    con.close()
     return row[0][0]
 
 def ac_member(user_id):
@@ -83,4 +88,13 @@ def ac_member(user_id):
             user_id
         )
     )
+    con.close()
     return row[0][0]
+
+def get_latest_registerd_users():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT * FROM users LIMIT 5'
+    )
+    con.close()
