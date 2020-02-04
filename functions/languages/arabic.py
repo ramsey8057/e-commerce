@@ -51,4 +51,8 @@ lang = {
     'TOTAL_COMMENTS'                                    : 'مجموع التعليقات',
     'LATEST_REGISTERED_USERS'                           : 'أحدث 5 مستخدمين مسجلين',
     'LATEST_ITEMS'                                      : 'أحدث العناصر',
+    'ACTIVATE'                                          : 'تفعيل',
+    'USER_DELETED'                                      : 'تم حذف',
+    'USER_ACTIVATED'                                    : 'تم تفعيل',
+    'USERS'                                             : 'مستخدمين',
 }

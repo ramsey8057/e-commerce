@@ -121,7 +121,8 @@ def members():
             if do == None:
                 users = get_all_users()
                 deleted = request.args.get('deleted')
-                return render_template('control_panel/members.html', dictionary=lang, session=session, users=users, deleted=deleted)
+                activated = request.args.get('activated')
+                return render_template('control_panel/members.html', dictionary=lang, session=session, users=users, deleted=deleted, activated=activated, pending=False)
             elif do == 'edit':
                 user_id = request.args['user_id']
                 user_data = get_user(user_id)
@@ -136,6 +137,13 @@ def members():
                 return render_template('control_panel/add_member.html', dictionary=lang, add_done=add_done, err_msg=err_msg, note=note)
             elif do == 'delete':
                 return redirect(url_for('.delete_member', user_id=request.args['user_id']))
+            elif do == 'activate':
+                return redirect(url_for('.activate_member',user_id=request.args['user_id']))
+            elif do == 'pending':
+                users = get_all_users()
+                deleted = request.args.get('deleted')
+                activated = request.args.get('activated')
+                return render_template('control_panel/members.html', dictionary=lang, session=session, users=users, deleted=deleted, activated=activated, pending=True)
             else:
                 user_id = request.args['user_id']
                 return redirect(url_for('.members'))
@@ -364,4 +372,16 @@ def delete_member(user_id):
             return redirect(url_for('.members'))
         except:
             # TODO: redirect to the 404 page
-            abort(404)
+            return abort(404)
+
+@control_panel.route('/admin/members/activate/<user_id>')
+def activate_member(user_id):
+    try:
+        row = ac_member(user_id)
+        return redirect(url_for('.members'), activated=row)
+    except:
+        try:
+            return redirect(url_for('.members'))
+        except:
+            # TODO: redirect to the 404 page
+            return abort(404)

@@ -51,4 +51,8 @@ lang = {
     'TOTAL_COMMENTS'                                    : 'Total Comments',
     'LATEST_REGISTERED_USERS'                           : 'Latest 5 registered users',
     'LATEST_ITEMS'                                      : 'Latest items',
+    'ACTIVATE'                                          : 'Activate',
+    'USER_DELETED'                                      : 'user deleted',
+    'USER_ACTIVATED'                                    : 'user activated',
+    'USERS'                                             : 'Users',
 }

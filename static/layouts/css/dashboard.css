@@ -24,7 +24,7 @@ h1 {
 .home-stats .stat a:hover {
     color: #d4d4d4;
     text-decoration: none;
-    transition: all ease .3s;
+    transition: all ease .5s;
 }
 
 .home-stats .stat span {

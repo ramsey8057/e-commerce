@@ -18,9 +18,26 @@
         <h1 class="text-center">{{ dictionary['MANAGE_MEMBERS'] }}</h1>
         <div class="container">
             {% if deleted != None %}
-                <div class="alert alert-success" role="alert">
-                  {{ deleted }} record deleted :)
-                </div>
+                {% if dictionary['lang'] == 'en' %}
+                    <div class="alert alert-success" role="alert">
+                      {{ deleted }} {{ dictionary['USER_DELETED'] }} :)
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                      :) {{ dictionary['USER_DELETED'] }} {{ deleted }} {{ dictionary['USERS'] }}
+                    </div>
+                {% endif %}
+            {% endif %}
+            {% if activated != None %}
+                {% if dictionary['lang'] == 'en' %}
+                    <div class="alert alert-success" role="alert">
+                      {{ activated }} {{ dictionary['USER_ACTIVATED'] }} :)
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                      :) {{ dictionary['USER_ACTIVATED'] }} {{ activated }} {{ dictionary['USERS'] }}
+                    </div>
+                {% endif %}
             {% endif %}
             <div class="table-responsive">
                 <table class="main-table text-center table table-bordered">
@@ -32,17 +49,42 @@
                         <td>{{ dictionary['REGISTRATION_DATE'] }}</td>
                         <td>{{ dictionary['CONTROL'] }}</td>
                     </tr>
-                    {% for i in users %}
-                        <tr>
-                            {% for j in i %}
-                                <td>{{ j }}</td>
-                            {% endfor %}
-                            <td>
-                                <a href="?do=edit&user_id={{ i[0] }}" class="btn btn-success"><i class="fa fa-edit"></i> {{ dictionary['EDIT'] }}</a>
-                                <a href="?do=delete&user_id={{ i[0] }}" class="btn btn-danger"><i class="fa fa-times"></i> {{ dictionary['DELETE'] }}</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                    {% if pending == False %}
+                        {% for i in users %}
+                            <tr>
+                                <td>{{ i[0] }}</td>
+                                <td>{{ i[1] }}</td>
+                                <td>{{ i[2] }}</td>
+                                <td>{{ i[3] }}</td>
+                                <td>{{ i[4] }}</td>
+                                <td>
+                                    <a href="?do=edit&user_id={{ i[0] }}" class="btn btn-success"><i class="fa fa-edit"></i> {{ dictionary['EDIT'] }}</a>
+                                    <a href="?do=delete&user_id={{ i[0] }}" class="btn btn-danger activate"><i class="fa fa-times"></i> {{ dictionary['DELETE'] }}</a>
+                                    {% if i[5] == 0 %}
+                                        <a href="?do=activate&user_id={{ i[0] }}" class="btn btn-info activate"><i class="fa fa-check"></i> {{ dictionary['ACTIVATE'] }}</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        {% for i in users %}
+                            {% if i[5] == 0 %}
+                                <tr>
+                                    <td>{{ i[0] }}</td>
+                                    <td>{{ i[1] }}</td>
+                                    <td>{{ i[2] }}</td>
+                                    <td>{{ i[3] }}</td>
+                                    <td>{{ i[4] }}</td>
+                                    <td>
+                                        <a href="?do=edit&user_id={{ i[0] }}" class="btn btn-success"><i class="fa fa-edit"></i> {{ dictionary['EDIT'] }}</a>
+                                        <a href="?do=delete&user_id={{ i[0] }}" class="btn btn-danger activate"><i class="fa fa-times"></i> {{ dictionary['DELETE'] }}</a>
+                                        <a href="?do=activate&user_id={{ i[0] }}" class="btn btn-info activate"><i class="fa fa-check"></i> {{ dictionary['ACTIVATE'] }}</a>
+
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 </table>
             </div>
             <a href="?do=add" class="btn btn-primary"><i class="fa fa-plus"></i> {{ dictionary['NEW_MEMBER'] }}</a>

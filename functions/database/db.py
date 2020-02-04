@@ -45,7 +45,7 @@ def get_all_users():
     con = connect_to_db()
     row = execute_dql_query(
         con,
-        'SELECT user_id, username, email, fullname, registration_date FROM users ORDER BY user_id LIMIT 100'
+        'SELECT user_id, username, email, fullname, registration_date, reg_status FROM users ORDER BY user_id LIMIT 100'
     )
     return row
 
@@ -72,5 +72,15 @@ def get_pending_users_count():
     row = execute_dql_query(
         con,
         'SELECT COUNT(user_id) FROM users WHERE reg_status = 0'
+    )
+    return row[0][0]
+
+def ac_member(user_id):
+    con = connect_to_db()
+    row = execute_dml_query(
+        con,
+        'UPDATE users SET reg_status=1 WHERE user_id={}'.format(
+            user_id
+        )
     )
     return row[0][0]
