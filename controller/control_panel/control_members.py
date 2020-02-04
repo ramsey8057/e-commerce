@@ -5,25 +5,25 @@ from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
 from functions.database.db import *
 
-control_users = Blueprint('control_users', __name__, template_folder='templates')
+control_members = Blueprint('control_members', __name__, template_folder='templates')
 
-@control_users.route('/admin')
+@control_members.route('/admin')
 def index():
     try:
         if session['username'] != '' and session['password'] != '':
             return redirect(url_for('.dashboard'))
         else:
             logging_in_failed = request.args.get('logging_in_failed')
-            return render_template('control_panel/login.html', dictionary=en, logging_in_failed=logging_in_failed)
+            return render_template('control_panel/members/login.html', dictionary=en, logging_in_failed=logging_in_failed)
     except:
         try:
             logging_in_failed = request.args.get('logging_in_failed')
-            return render_template('control_panel/login.html', dictionary=en, logging_in_failed=logging_in_failed)
+            return render_template('control_panel/members/login.html', dictionary=en, logging_in_failed=logging_in_failed)
         except:
             # TODO: redirect to the 404 page
             abort(404)
 
-@control_users.route('/admin/dashboard')
+@control_members.route('/admin/dashboard')
 def dashboard():
     try:
         if session['username'] != '' and session['password'] != '':
@@ -36,7 +36,7 @@ def dashboard():
             pending_users_count = get_pending_users_count()
             latest_users = get_latest_registerd_users()
             return render_template(
-                'control_panel/dashboard.html',
+                'control_panel/members/dashboard.html',
                dictionary=lang,
                session=session,
                users_count=users_count,
@@ -52,7 +52,7 @@ def dashboard():
             # TODO: redirect to the 404 page
             abort(404)
 
-@control_users.route('/admin/admin_login', methods=['POST', ])
+@control_members.route('/admin/admin_login', methods=['POST', ])
 def login():
     if request.method == 'POST':
         # fetch the data from the request
@@ -87,7 +87,7 @@ def login():
             session['language'] = 'en'
         return redirect(url_for('.index'))
 
-@control_users.route('/admin/change_language')
+@control_members.route('/admin/change_language')
 def change_language():
     try:
         if session['language'] == 'en':
@@ -99,7 +99,7 @@ def change_language():
         # TODO: redirect to the 404 page
         abort(404)
 
-@control_users.route('/admin/logout')
+@control_members.route('/admin/logout')
 def logout():
     try:
         session['username'] = ''
@@ -110,7 +110,7 @@ def logout():
         # TODO: redirect to the 404 page
         abort(404)
 
-@control_users.route('/admin/members')
+@control_members.route('/admin/members')
 def members():
     try:
         if session['username'] != '' and session['password'] != '':
@@ -125,7 +125,7 @@ def members():
                 deleted = request.args.get('deleted')
                 activated = request.args.get('activated')
                 return render_template(
-                    'control_panel/members.html',
+                    'control_panel/members/members.html',
                     dictionary=lang,
                     session=session,
                     users=users,
@@ -140,7 +140,7 @@ def members():
                 err_msg   = request.args.get('err_msg')
                 note      = request.args.get('note')
                 return render_template(
-                    'control_panel/edit_member.html',
+                    'control_panel/members/edit_member.html',
                     dictionary=lang,
                     session=session,
                     user_id=user_id,
@@ -153,7 +153,7 @@ def members():
                 add_done = request.args.get('add_done')
                 err_msg   = request.args.get('err_msg')
                 note      = request.args.get('note')
-                return render_template('control_panel/add_member.html', dictionary=lang, add_done=add_done, err_msg=err_msg, note=note)
+                return render_template('control_panel/members/add_member.html', dictionary=lang, add_done=add_done, err_msg=err_msg, note=note)
             elif do == 'delete':
                 return redirect(url_for('.delete_member', user_id=request.args['user_id']))
             elif do == 'activate':
@@ -163,7 +163,7 @@ def members():
                 deleted = request.args.get('deleted')
                 activated = request.args.get('activated')
                 return render_template(
-                    'control_panel/members.html',
+                    'control_panel/members/members.html',
                     dictionary=lang,
                     session=session,
                     users=users,
@@ -183,14 +183,14 @@ def members():
             # TODO: redirect to the 404 page
             abort(404)
 
-@control_users.route('/admin/members/edit_member', methods=['POST', ])
+@control_members.route('/admin/members/edit_member', methods=['POST', ])
 def edit_member():
     if request.method == 'POST':
         user_id = request.form['user_id']
-        username  = ''
-        password  = ''
-        email     = ''
-        full_name = ''
+        username  = None
+        password  = None
+        email     = None
+        full_name = None
         try:
             # fetch the data from the request
             username  = request.form['username']
@@ -244,7 +244,7 @@ def edit_member():
                 return redirect(url_for('.members'))
         except Exception as e:
             e = str(e)
-            lang = ''
+            lang = None
             if session['language'] == 'ar':
                 lang = ar
             else:
@@ -315,17 +315,17 @@ def edit_member():
                 # TODO: redirect to the 503 page
                 return abort(503)
 
-@control_users.route('/admin/members/add_member', methods=['POST', ])
+@control_members.route('/admin/members/add_member', methods=['POST',])
 def add_member():
     if request.method == 'POST':
-        user_id    = get_new_id()
-        username   = ''
-        password   = ''
-        cpassword  = ''
-        email      = ''
-        full_name  = ''
-        group_id   = ''
-        reg_status = ''
+        user_id    = get_new_member_id()
+        username   = None
+        password   = None
+        cpassword  = None
+        email      = None
+        full_name  = None
+        group_id   = None
+        reg_status = None
         try:
             # fetch the data from the request
             username   = request.form['username']
@@ -368,8 +368,26 @@ def add_member():
             rowcount = execute_dml_query(
                 con,
                 '''
-                INSERT INTO users (user_id, username, password, email, fullname, group_id, reg_status, registration_date)
-                VALUES ({}, \'{}\', \'{}\', \'{}\', \'{}\', {}, {}, \'{}\')
+                INSERT INTO users (
+                                    user_id,
+                                    username,
+                                    password,
+                                    email,
+                                    fullname,
+                                    group_id,
+                                    reg_status,
+                                    registration_date
+                                )
+                        VALUES (
+                                    {},
+                                    '{}',
+                                    '{}',
+                                    '{}',
+                                    '{}',
+                                    {},
+                                    {},
+                                    '{}'
+                                )
                 '''.format(
                     user_id,
                     username,
@@ -393,7 +411,7 @@ def add_member():
                 return redirect(url_for('.members', do='add', add_done=False))
         except Exception as e:
             e = str(e)
-            lang = ''
+            lang = None
             if session['language'] == 'ar':
                 lang = ar
             else:
@@ -421,7 +439,7 @@ def add_member():
                 # TODO: redirect to the 503 page
                 return abort(503)
 
-@control_users.route('/admin/members/delete/<user_id>')
+@control_members.route('/admin/members/delete/<user_id>')
 def delete_member(user_id):
     try:
         row = del_member(user_id)
@@ -433,7 +451,7 @@ def delete_member(user_id):
             # TODO: redirect to the 404 page
             return abort(404)
 
-@control_users.route('/admin/members/activate/<user_id>')
+@control_members.route('/admin/members/activate/<user_id>')
 def activate_member(user_id):
     try:
         row = ac_member(user_id)

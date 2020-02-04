@@ -33,20 +33,22 @@ def get_user(user_id):
     )
     return row[0]
 
-def get_new_id():
+def get_new_member_id():
     con = connect_to_db()
     row = execute_dql_query(
         con,
         'SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1'
     )
     con.close()
+    if row == []:
+        return 1
     return (row[0][0] + 1)
 
 def get_all_users():
     con = connect_to_db()
     row = execute_dql_query(
         con,
-        'SELECT user_id, username, email, fullname, registration_date, reg_status FROM users ORDER BY user_id LIMIT 100'
+        'SELECT user_id, username, email, fullname, registration_date, reg_status FROM members ORDER BY user_id LIMIT 100'
     )
     con.close()
     return row
@@ -84,7 +86,7 @@ def ac_member(user_id):
     con = connect_to_db()
     row = execute_dml_query(
         con,
-        'UPDATE users SET reg_status=1 WHERE user_id={}'.format(
+        'UPDATE members SET reg_status=1 WHERE user_id={}'.format(
             user_id
         )
     )
@@ -100,3 +102,14 @@ def get_latest_registerd_users():
     )
     con.close()
     return row
+
+def get_new_category_id():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT category_id FROM categories ORDER BY category_id DESC LIMIT 1'
+    )
+    con.close()
+    if row == []:
+        return 1
+    return (row[0][0] + 1)

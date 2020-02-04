@@ -1,4 +1,4 @@
-{% extends 'control_panel/base.html' %}
+{% extends 'control_panel/members/base.html' %}
 
 {% block admin_title %}
     Dashboard
@@ -7,13 +7,13 @@
 {% block admin_css_link %}
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/members/dashboard.css') }}">
 {% endblock %}
 
 {% block admin_content %}
     <body>
         {% with args=[session['fullname'], dictionary, 'dashboard', session['user_id']] %}
-            {% include 'control_panel/navbar.html' %}
+            {% include 'control_panel/members/navbar.html' %}
         {% endwith %}
 
         <div class="container home-stats text-center">

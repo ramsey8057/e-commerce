@@ -1,0 +1,96 @@
+{% extends 'control_panel/members/base.html' %}
+
+{% block admin_title %}
+    Add Members
+{% endblock %}
+
+{% block admin_css_link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/members/add_member.css') }}">
+{% endblock %}
+
+{% block admin_content %}
+    <body>
+        {% with args=[session['fullname'], dictionary, 'categories', session['user_id']] %}
+            {% include 'control_panel/members/navbar.html' %}
+        {% endwith %}
+
+        <h1 class="text-center">{{ dictionary['ADD_CATEGORY'] }}</h1>
+        <div class="container ">
+            {% if add_done == 'True' %}
+                <div class="alert alert-success" role="alert">
+                {{ dictionary['ADD_CATEGORY_SUCCESS'] }} :)
+                </div>
+            {% elif add_done == 'False' %}
+                {% if err_msg %}
+                    <div class="alert alert-danger" role="alert">
+                    {{ err_msg }} :(
+                    </div>
+                    {% if note %}
+                        <div class="alert alert-warning" role="alert">
+                        {{ note }}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                    {{ dictionary['ADD_CATEGORY_FAILED_MSG'] }} :(
+                    </div>
+                {% endif %}
+            {% endif %}
+            <form action="categories/add_category" method="POST" class="form-horizontal">
+                <!-- category name field -->
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label">{{ dictionary['CATEGORY_NAME'] }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="name" class="form-control form-control-lg" placeholder="{{ dictionary['ADD_CATEGORY_NAME_PLACEHOLDER'] }}" required />
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <!-- category description field -->
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label">{{ dictionary['CATEGORY_DESCRIPTION'] }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="description" class="form-control form-control-lg" placeholder="{{ dictionary['ADD_CATEGORY_DESCRIPTION_PLACEHOLDER'] }}" required />
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <!-- category order field -->
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label">{{ dictionary['CATEGORY_ORDER'] }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="order" class="form-control form-control-lg" placeholder="{{ dictionary['ADD_CATEGORY_ORDER_PLACEHOLDER'] }}" required />
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <!-- is visible field -->
+                    <div class="form-check" style="padding-right: 50px;">
+                        <input type="checkbox" name="is_visible" class="form-check-input">
+                        <label class="form-check-label" for="group_id">{{ dictionary['IS_VISIBLE'] }}</label>
+                    </div>
+                    <!-- allow comment field -->
+                    <div class="form-check" style="padding-right: 50px;">
+                        <input type="checkbox" name="allow_comments" class="form-check-input">
+                        <label class="form-check-label" for="reg_status">{{ dictionary['ALLOW_COMMENTS'] }}</label>
+                    </div>
+                    <!-- allow ads field -->
+                    <div class="form-check">
+                        <input type="checkbox" name="allow_ads" class="form-check-input">
+                        <label class="form-check-label" for="reg_status">{{ dictionary['ALLOW_ADS'] }}</label>
+                    </div>
+                </div>
+                <!-- submit field -->
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" value="{{ dictionary['SAVE'] }}" class="btn btn-primary btn-lg" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+{% endblock %}
+
+{% block admin_scripts_link %}
+    <script src="{{ url_for('static', filename='layouts/js/category/add_category.js') }}"></script>
+{% endblock %}

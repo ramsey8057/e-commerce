@@ -1,0 +1,19 @@
+{% extends 'control_panel/members/base.html' %}
+
+{% block admin_title %}
+    Categories
+{% endblock %}
+
+{% block admin_css_link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/categories/categories.css') }}">
+{% endblock %}
+
+{% block admin_content %}
+    <body>
+        {% with args=[session['fullname'], dictionary, 'members', session['user_id']] %}
+            {% include 'control_panel/members/navbar.html' %}
+        {% endwith %}
+    </body>
+{% endblock %}

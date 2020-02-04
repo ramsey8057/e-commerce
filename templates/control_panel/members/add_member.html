@@ -1,4 +1,4 @@
-{% extends 'control_panel/base.html' %}
+{% extends 'control_panel/members/base.html' %}
 
 {% block admin_title %}
     Add Members
@@ -7,20 +7,20 @@
 {% block admin_css_link %}
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/add_member.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/members/add_member.css') }}">
 {% endblock %}
 
 {% block admin_content %}
     <body>
         {% with args=[session['fullname'], dictionary, 'members', session['user_id']] %}
-            {% include 'control_panel/navbar.html' %}
+            {% include 'control_panel/members/navbar.html' %}
         {% endwith %}
 
         <h1 class="text-center">{{ dictionary['ADD_MEMBER'] }}</h1>
         <div class="container ">
             {% if add_done == 'True' %}
                 <div class="alert alert-success" role="alert">
-                User added successfully :)
+                {{ dictionary['ADD_USER_SUCCESS'] }} :)
                 </div>
             {% elif add_done == 'False' %}
                 {% if err_msg %}
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <!-- submit field -->
-                <div class="foorm-group">
+                <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <input type="submit" value="{{ dictionary['SAVE'] }}" class="btn btn-primary btn-lg" />
                     </div>
