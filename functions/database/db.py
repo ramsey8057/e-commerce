@@ -49,7 +49,7 @@ def get_all_users():
     )
     return row
 
-def delete_member(user_id):
+def del_member(user_id):
     con = connect_to_db()
     row = execute_dml_query(
         con,
@@ -58,3 +58,19 @@ def delete_member(user_id):
         )
     )
     return row
+
+def get_users_count():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT COUNT(user_id) FROM users'
+    )
+    return row[0][0]
+
+def get_pending_users_count():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT COUNT(user_id) FROM users WHERE reg_status = 0'
+    )
+    return row[0][0]

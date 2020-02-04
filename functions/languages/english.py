@@ -45,4 +45,10 @@ lang = {
     'NEW_MEMBER'                                        : 'New Member',
     'EDIT'                                              : 'Edit',
     'DELETE'                                            : 'Delete',
+    'TOTAL_MEMBERS'                                     : 'Total Members',
+    'PENDING_MEMBERS'                                   : 'Pending Members',
+    'TOTAL_ITEMS'                                       : 'Total Items',
+    'TOTAL_COMMENTS'                                    : 'Total Comments',
+    'LATEST_REGISTERED_USERS'                           : 'Latest 5 registered users',
+    'LATEST_ITEMS'                                      : 'Latest items',
 }

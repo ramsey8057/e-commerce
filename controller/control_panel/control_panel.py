@@ -3,7 +3,7 @@ import datetime
 from flask import Blueprint, render_template, abort, redirect, url_for, request, session
 from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
-from functions.database.db import connect_to_db, execute_dql_query, execute_dml_query, get_user, get_new_id, get_all_users, delete_member as del_member
+from functions.database.db import *
 
 control_panel = Blueprint('control_panel', __name__, template_folder='templates')
 
@@ -32,7 +32,15 @@ def dashboard():
                 lang = ar
             else:
                 lang = en
-            return render_template('control_panel/dashboard.html', dictionary=lang, session=session)
+            users_count = get_users_count()
+            pending_users_count = get_pending_users_count()
+            return render_template(
+                'control_panel/dashboard.html',
+               dictionary=lang,
+               session=session,
+               users_count=users_count,
+               pending_users_count=pending_users_count
+           )
         else:
             return redirect(url_for('.index'))
     except:
@@ -208,9 +216,33 @@ def edit_member():
                 lang = en
             if 'already exists' in e:
                 if 'username' in e:
-                    return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg='{} "{}" {}'.format(lang['USERNAME'], username, lang['NOT_AVAILABLE'])))
+                    return redirect(
+                        url_for(
+                            '.members',
+                            do='edit',
+                            user_id=user_id,
+                            edit_done=False,
+                            err_msg='{} "{}" {}'.format(
+                                lang['USERNAME'],
+                                username,
+                                lang['NOT_AVAILABLE']
+                            )
+                        )
+                    )
                 elif 'email' in e:
-                    return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg='{} "{}" {}'.format(lang['EMAIL'], email, lang['NOT_AVAILABLE'])))
+                    return redirect(
+                        url_for(
+                            '.members',
+                            do='edit',
+                            user_id=user_id,
+                            edit_done=False,
+                            err_msg='{} "{}" {}'.format(
+                                lang['EMAIL'],
+                                email,
+                                lang['NOT_AVAILABLE']
+                            )
+                        )
+                    )
             else:
                 if e == 'invalid username':
                     return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg=lang['USERNAME_ERR_MSG'], note=lang['USERNAME_NOTE']))

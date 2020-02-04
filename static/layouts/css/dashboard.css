@@ -1,0 +1,69 @@
+/* start dashboard page */
+
+h1 {
+    font-size: 55px;
+    margin: 40px 0;
+    font-weight: bold;
+    color: #666;
+}
+
+.home-stats .stat {
+    border-color: #EEE;
+    border: 1px solid #CCC;
+    padding: 20px;
+    font-size: 15px;
+    color: #FFF;
+    border-radius: 10px;
+}
+
+.home-stats .stat a {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.home-stats .stat a:hover {
+    color: #d4d4d4;
+    text-decoration: none;
+    transition: all ease .3s;
+}
+
+.home-stats .stat span {
+    display: block;
+    font-size: 60px;
+}
+
+.latest {
+    margin-top: 40px;
+}
+
+.panel {
+    border: 1px solid #CCC;
+}
+
+.panel-heading {
+    background-color: #F4F4F4;
+    padding: 20px;
+}
+
+.panel-body {
+    background-color: #FFF;
+    padding: 20px;
+}
+
+.home-stats .st-members {
+    background-color: #3498DB;
+}
+
+.home-stats .st-pending {
+    background-color: #c0392b;
+}
+
+.home-stats .st-items {
+    background-color: #d35400;
+}
+
+.home-stats .st-comments {
+    background-color: #8e44ad;
+}
+
+/* end dashboard page */

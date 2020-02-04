@@ -7,7 +7,7 @@
 {% block admin_css_link %}
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/dashboard.css') }}">
 {% endblock %}
 
 {% block admin_content %}
@@ -17,6 +17,58 @@
             {% include 'control_panel/navbar.html' %}
         {% endwith %}
 
-        <p>{{ dictionary['WELCOME'] }} {{ session['fullname'] }}</p>
+        <div class="container home-stats text-center">
+            <h1>Dashboard</h1>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat st-members">
+                        {{ dictionary['TOTAL_MEMBERS'] }}
+                        <span><a href="/admin/members">{{ users_count }}</a></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat st-pending">
+                        {{ dictionary['PENDING_MEMBERS'] }}
+                        <span>{{ pending_users_count }}</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat st-items">
+                        {{ dictionary['TOTAL_ITEMS'] }}
+                        <span>1500</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat st-comments">
+                        {{ dictionary['TOTAL_COMMENTS'] }}
+                        <span>3500</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="container latest">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-users"></i> {{ dictionary['LATEST_REGISTERED_USERS'] }}
+                    </div>
+                    <div class="panel-body">
+                        Test
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-tag"></i> {{ dictionary['LATEST_ITEMS'] }}
+                    </div>
+                    <div class="panel-body">
+                        Test
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </body>
 {% endblock %}

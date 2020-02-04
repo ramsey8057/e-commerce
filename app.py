@@ -1,4 +1,3 @@
-import os
 from flask import Flask
 from controller.control_panel.control_panel import control_panel
 
