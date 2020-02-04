@@ -1,7 +1,6 @@
 .DS_STORE/
-
 .idea/
-
+.vscode/
 venv/
 
 *.pyc
@@ -16,5 +15,3 @@ htmlcov/
 dist/
 build/
 *.egg-info/
-
-.vscode/
