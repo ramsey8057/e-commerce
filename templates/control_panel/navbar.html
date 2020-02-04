@@ -95,7 +95,7 @@
                         {{ args[0] }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="members?do=edit">{{ args[1]['EDIT_PROFILE'] }}</a>
+                        <a class="dropdown-item" href="members?do=edit&user_id={{ args[3] }}">{{ args[1]['EDIT_PROFILE'] }}</a>
                         <a class="dropdown-item" href="#">{{ args[1]['SETTINGS'] }}</a>
                         <a class="dropdown-item" href="change_language">{{ args[1]['CHANGE_LANGUAGE'] }}</a>
                         <a class="dropdown-item" href="logout">{{ args[1]['LOGOUT'] }}</a>

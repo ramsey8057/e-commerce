@@ -12,10 +12,40 @@
 
 {% block admin_content %}
     <body>
-        {% with args=[session['fullname'], dictionary, 'members'] %}
+        {% with args=[session['fullname'], dictionary, 'members', session['user_id']] %}
             {% include 'control_panel/navbar.html' %}
         {% endwith %}
-        <p>Welcome to manage members page</p>
-        <a href="?do=add">Add new member</a>
+        <h1 class="text-center">{{ dictionary['MANAGE_MEMBERS'] }}</h1>
+        <div class="container">
+            {% if deleted != None %}
+                <div class="alert alert-success" role="alert">
+                  {{ deleted }} record deleted :)
+                </div>
+            {% endif %}
+            <div class="table-responsive">
+                <table class="main-table text-center table table-bordered">
+                    <tr>
+                        <td>#ID</td>
+                        <td>{{ dictionary['USERNAME'] }}</td>
+                        <td>{{ dictionary['EMAIL'] }}</td>
+                        <td>{{ dictionary['FULL_NAME'] }}</td>
+                        <td>{{ dictionary['REGISTRATION_DATE'] }}</td>
+                        <td>{{ dictionary['CONTROL'] }}</td>
+                    </tr>
+                    {% for i in users %}
+                        <tr>
+                            {% for j in i %}
+                                <td>{{ j }}</td>
+                            {% endfor %}
+                            <td>
+                                <a href="?do=edit&user_id={{ i[0] }}" class="btn btn-success"><i class="fa fa-edit"></i> {{ dictionary['EDIT'] }}</a>
+                                <a href="?do=delete&user_id={{ i[0] }}" class="btn btn-danger"><i class="fa fa-times"></i> {{ dictionary['DELETE'] }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <a href="?do=add" class="btn btn-primary"><i class="fa fa-plus"></i> {{ dictionary['NEW_MEMBER'] }}</a>
+        </div>
     </body>
 {% endblock %}

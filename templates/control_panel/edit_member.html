@@ -12,7 +12,7 @@
 
 {% block admin_content %}
     <body>
-        {% with args=[session['fullname'], dictionary, 'members'] %}
+        {% with args=[session['fullname'], dictionary, 'members', session['user_id']] %}
             {% include 'control_panel/navbar.html' %}
         {% endwith %}
 
@@ -39,6 +39,7 @@
                 {% endif %}
             {% endif %}
             <form action="members/edit_member" method="POST" class="form-horizontal">
+                <input type="hidden" name="user_id" value="{{ user_id }}" />
                 <!-- username field -->
                 <div class="form-group row" style="padding-bottom: 15px;">
                     <label class="col-sm-2 col-form-label">{{ dictionary['USERNAME'] }}</label>

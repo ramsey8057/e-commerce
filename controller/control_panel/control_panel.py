@@ -1,8 +1,9 @@
 import hashlib
+import datetime
 from flask import Blueprint, render_template, abort, redirect, url_for, request, session
 from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
-from functions.database.db import connect_to_db, execute_dql_query, execute_dml_query, get_user, get_new_id
+from functions.database.db import connect_to_db, execute_dql_query, execute_dml_query, get_user, get_new_id, get_all_users, delete_member as del_member
 
 control_panel = Blueprint('control_panel', __name__, template_folder='templates')
 
@@ -110,23 +111,29 @@ def members():
                 lang = en
             do = request.args.get('do')
             if do == None:
-                return render_template('control_panel/members.html', dictionary=lang, session=session)
+                users = get_all_users()
+                deleted = request.args.get('deleted')
+                return render_template('control_panel/members.html', dictionary=lang, session=session, users=users, deleted=deleted)
             elif do == 'edit':
-                user_data = get_user(session['user_id'])
+                user_id = request.args['user_id']
+                user_data = get_user(user_id)
                 edit_done = request.args.get('edit_done')
                 err_msg   = request.args.get('err_msg')
                 note      = request.args.get('note')
-                return render_template('control_panel/edit_member.html', dictionary=lang, session=session, user_data=user_data, edit_done=edit_done, err_msg=err_msg, note=note)
+                return render_template('control_panel/edit_member.html', dictionary=lang, session=session, user_id=user_id, user_data=user_data, edit_done=edit_done, err_msg=err_msg, note=note)
             elif do == 'add':
-                user_data = get_user(session['user_id'])
                 add_done = request.args.get('add_done')
                 err_msg   = request.args.get('err_msg')
                 note      = request.args.get('note')
                 return render_template('control_panel/add_member.html', dictionary=lang, add_done=add_done, err_msg=err_msg, note=note)
+            elif do == 'delete':
+                return redirect(url_for('.delete_member', user_id=request.args['user_id']))
+            else:
+                user_id = request.args['user_id']
+                return redirect(url_for('.members'))
         else:
             return redirect(url_for('.index'))
-    except Exception as e:
-        print(e)
+    except:
         try:
             return redirect(url_for('.index'))
         except:
@@ -136,6 +143,7 @@ def members():
 @control_panel.route('/admin/members/edit_member', methods=['POST',])
 def edit_member():
     if request.method == 'POST':
+        user_id = request.form['user_id']
         username  = ''
         password  = ''
         email     = ''
@@ -172,7 +180,7 @@ def edit_member():
                         password,
                         email,
                         full_name,
-                        session['user_id'],
+                        user_id,
                     ),
                 )
             else:
@@ -182,15 +190,15 @@ def edit_member():
                         username,
                         email,
                         full_name,
-                        session['user_id'],
+                        user_id,
                     ),
                 )
             # close the database connection
             con.close()
             if rowcount >= 1:
-                return redirect(url_for('.members', do='edit', edit_done=True))
+                return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=True))
             else:
-                return redirect(url_for('.members', do='edit', edit_done=False))
+                return redirect(url_for('.members'))
         except Exception as e:
             e = str(e)
             lang = ''
@@ -200,16 +208,16 @@ def edit_member():
                 lang = en
             if 'already exists' in e:
                 if 'username' in e:
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='{} "{}" {}'.format(lang['USERNAME'], username, lang['NOT_AVAILABLE'])))
+                    return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg='{} "{}" {}'.format(lang['USERNAME'], username, lang['NOT_AVAILABLE'])))
                 elif 'email' in e:
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg='{} "{}" {}'.format(lang['EMAIL'], email, lang['NOT_AVAILABLE'])))
+                    return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg='{} "{}" {}'.format(lang['EMAIL'], email, lang['NOT_AVAILABLE'])))
             else:
                 if e == 'invalid username':
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg=lang['USERNAME_ERR_MSG'], note=lang['USERNAME_NOTE']))
+                    return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg=lang['USERNAME_ERR_MSG'], note=lang['USERNAME_NOTE']))
                 elif e == 'invalid full name':
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg=lang['FULL_NAME_ERR_MSG'], note=lang['FULL_NAME_NOTE']))
+                    return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg=lang['FULL_NAME_ERR_MSG'], note=lang['FULL_NAME_NOTE']))
                 elif e == 'invalid password':
-                    return redirect(url_for('.members', do='edit', edit_done=False, err_msg=lang['PASSWORD_ERR_MSG'], note=lang['PASSWORD_NOTE']))
+                    return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=False, err_msg=lang['PASSWORD_ERR_MSG'], note=lang['PASSWORD_NOTE']))
                 # TODO: redirect to the 503 page
                 return abort(503)
 
@@ -237,8 +245,6 @@ def add_member():
             group_id   = request.form.get('group_id')
             reg_status = request.form.get('reg_status')
             # validate the inputs
-            print(reg_status)
-            print(group_id)
             if group_id == 'on':
                 group_id = 1
             else:
@@ -267,19 +273,22 @@ def add_member():
             con = connect_to_db()
             rowcount = execute_dml_query(
                 con,
-                'INSERT INTO users (user_id, username, password, email, fullname, group_id, reg_status) VALUES ({}, \'{}\', \'{}\', \'{}\', \'{}\', {}, {})'.format(
+                'INSERT INTO users (user_id, username, password, email, fullname, group_id, reg_status, registration_date) VALUES ({}, \'{}\', \'{}\', \'{}\', \'{}\', {}, {}, \'{}\')'.format(
                     user_id,
                     username,
                     password,
                     email,
                     full_name,
                     group_id,
-                    reg_status
+                    reg_status,
+                    '{} - {} - {}'.format(
+                        datetime.datetime.now().day,
+                        datetime.datetime.now().month,
+                        datetime.datetime.now().year,
+                    ),
                 )
             )
             if rowcount >= 1:
-                print(reg_status)
-                print(group_id)
                 return redirect(url_for('.members', do='add', add_done=True))
             else:
                 return redirect(url_for('.members', do='add', add_done=False))
@@ -312,3 +321,15 @@ def add_member():
                     return redirect(url_for('.members', do='add', add_done=False, err_msg=lang['CPASSWORD_ERR_MSG']))
                 # TODO: redirect to the 503 page
                 return abort(503)
+
+@control_panel.route('/admin/members/delete/<user_id>')
+def delete_member(user_id):
+    try:
+        row = del_member(user_id)
+        return redirect(url_for('.members', deleted=row))
+    except:
+        try:
+            return redirect(url_for('.members'))
+        except:
+            # TODO: redirect to the 404 page
+            abort(404)

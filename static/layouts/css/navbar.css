@@ -14,11 +14,15 @@
     font-size: 1em;
 }
 
-.dropdown,
-.dropdown:focus,
-.dropdown:hover,
+.dropdown-item:hover {
+    background-color: #0056b3;
+    color: #FFF;
+    padding-left: 2rem;
+    transition: all ease-in-out .5s;
+}
+
 .dropdown-menu {
-    background-color: #3498DB;
+    background-color: #343A40;
 }
 
 .dropdown-menu {

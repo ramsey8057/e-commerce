@@ -12,7 +12,7 @@
 
 {% block admin_content %}
     <body>
-        {% with args=[session['fullname'], dictionary, 'members'] %}
+        {% with args=[session['fullname'], dictionary, 'members', session['user_id']] %}
             {% include 'control_panel/navbar.html' %}
         {% endwith %}
 

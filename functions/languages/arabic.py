@@ -39,4 +39,10 @@ lang = {
     'UPDATE_USER_FAILED_MSG'                            : 'فشل تحديث المستخدم',
     'ADD_USER_DONE_MSG'                                 : 'تمت إضافة المستخدم بنجاح',
     'ADD_USER_FAILED_MSG'                               : 'فشل إضافة المستخدم',
+    'MANAGE_MEMBERS'                                    : 'إدارة الأعضاء',
+    'REGISTRATION_DATE'                                 : 'تاريخ التسجيل',
+    'CONTROL'                                           : 'تحكم',
+    'NEW_MEMBER'                                        : 'عضو جديد',
+    'EDIT'                                              : 'تعديل',
+    'DELETE'                                            : 'حذف',
 }

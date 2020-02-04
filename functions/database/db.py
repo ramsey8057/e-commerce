@@ -40,3 +40,21 @@ def get_new_id():
         'SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1'
     )
     return (row[0][0] + 1)
+
+def get_all_users():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT user_id, username, email, fullname, registration_date FROM users ORDER BY user_id LIMIT 100'
+    )
+    return row
+
+def delete_member(user_id):
+    con = connect_to_db()
+    row = execute_dml_query(
+        con,
+        'DELETE FROM users WHERE user_id={}'.format(
+            user_id
+        )
+    )
+    return row
