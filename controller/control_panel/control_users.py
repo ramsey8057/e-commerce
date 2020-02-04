@@ -5,9 +5,9 @@ from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
 from functions.database.db import *
 
-control_panel = Blueprint('control_panel', __name__, template_folder='templates')
+control_users = Blueprint('control_users', __name__, template_folder='templates')
 
-@control_panel.route('/admin')
+@control_users.route('/admin')
 def index():
     try:
         if session['username'] != '' and session['password'] != '':
@@ -23,7 +23,7 @@ def index():
             # TODO: redirect to the 404 page
             abort(404)
 
-@control_panel.route('/admin/dashboard')
+@control_users.route('/admin/dashboard')
 def dashboard():
     try:
         if session['username'] != '' and session['password'] != '':
@@ -52,7 +52,7 @@ def dashboard():
             # TODO: redirect to the 404 page
             abort(404)
 
-@control_panel.route('/admin/admin_login', methods=['POST',])
+@control_users.route('/admin/admin_login', methods=['POST', ])
 def login():
     if request.method == 'POST':
         # fetch the data from the request
@@ -87,7 +87,7 @@ def login():
             session['language'] = 'en'
         return redirect(url_for('.index'))
 
-@control_panel.route('/admin/change_language')
+@control_users.route('/admin/change_language')
 def change_language():
     try:
         if session['language'] == 'en':
@@ -99,7 +99,7 @@ def change_language():
         # TODO: redirect to the 404 page
         abort(404)
 
-@control_panel.route('/admin/logout')
+@control_users.route('/admin/logout')
 def logout():
     try:
         session['username'] = ''
@@ -110,7 +110,7 @@ def logout():
         # TODO: redirect to the 404 page
         abort(404)
 
-@control_panel.route('/admin/members')
+@control_users.route('/admin/members')
 def members():
     try:
         if session['username'] != '' and session['password'] != '':
@@ -183,7 +183,7 @@ def members():
             # TODO: redirect to the 404 page
             abort(404)
 
-@control_panel.route('/admin/members/edit_member', methods=['POST',])
+@control_users.route('/admin/members/edit_member', methods=['POST', ])
 def edit_member():
     if request.method == 'POST':
         user_id = request.form['user_id']
@@ -315,7 +315,7 @@ def edit_member():
                 # TODO: redirect to the 503 page
                 return abort(503)
 
-@control_panel.route('/admin/members/add_member', methods=['POST',])
+@control_users.route('/admin/members/add_member', methods=['POST', ])
 def add_member():
     if request.method == 'POST':
         user_id    = get_new_id()
@@ -421,7 +421,7 @@ def add_member():
                 # TODO: redirect to the 503 page
                 return abort(503)
 
-@control_panel.route('/admin/members/delete/<user_id>')
+@control_users.route('/admin/members/delete/<user_id>')
 def delete_member(user_id):
     try:
         row = del_member(user_id)
@@ -433,7 +433,7 @@ def delete_member(user_id):
             # TODO: redirect to the 404 page
             return abort(404)
 
-@control_panel.route('/admin/members/activate/<user_id>')
+@control_users.route('/admin/members/activate/<user_id>')
 def activate_member(user_id):
     try:
         row = ac_member(user_id)
