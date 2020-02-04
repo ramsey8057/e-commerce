@@ -1,1 +1,1 @@
-web: gunicorn app:app --log-files=-
+web: gunicorn e-commerce:e_commerce --log-file=-
