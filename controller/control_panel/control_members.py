@@ -462,8 +462,11 @@ def delete_member(user_id):
 @control_members.route('/admin/members/activate/<user_id>')
 def activate_member(user_id):
     try:
-        row = ac_member(user_id)
-        return redirect(url_for('.members', activated=row))
+        if session['username'] != '' and session['password'] != '':
+            row = ac_member(user_id)
+            return redirect(url_for('.members', activated=row))
+        else:
+            return redirect('/admin')
     except:
         try:
             return redirect(url_for('.members'))

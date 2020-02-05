@@ -79,4 +79,5 @@ lang = {
     'NEW_CATEGORY'                                      : 'New Category',
     'EDIT_CATEGORY'                                     : 'Edit Category',
     'UPDATE_CATEGORY_FAILED_MSG'                        : 'Update category failed',
+    'CATEGORY_DELETED'                                  : 'category deleted',
 }

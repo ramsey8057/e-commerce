@@ -1,7 +1,7 @@
 lang = {
     'lang'                                              : 'ar',
     'HOME'                                              : 'الصفحة الرئيسية',
-    'CATEGORIES'                                        : 'التصنيفات',
+    'CATEGORIES'                                        : 'الفئات',
     'EDIT_PROFILE'                                      : 'تعديل الملف الشخصي',
     'SETTINGS'                                          : 'الإعدادات',
     'LOGOUT'                                            : 'تسجيل خروج',
@@ -79,4 +79,5 @@ lang = {
     'NEW_CATEGORY'                                      : 'فئة جديدة',
     'EDIT_CATEGORY'                                     : 'تحرير الفئة',
     'UPDATE_CATEGORY_FAILED_MSG'                        : 'فشل تحديث الفئة',
+    'CATEGORY_DELETED'                                  : 'تم حذف',
 }

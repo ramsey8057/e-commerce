@@ -17,6 +17,17 @@
         {% endwith %}
         <h1 class="text-center">{{ dictionary['MANAGE_CATEGORIES'] }}</h1>
         <div class="container categories">
+            {% if deleted %}
+                {% if dictionary['lang'] == 'en' %}
+                    <div class="alert alert-success" role="alert">
+                      {{ deleted }} {{ dictionary['CATEGORY_DELETED'] }} :)
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                      :) {{ dictionary['CATEGORY_DELETED'] }} {{ deleted }} {{ dictionary['CATEGORIES'] }}
+                    </div>
+                {% endif %}
+            {% endif %}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     {{ dictionary['MANAGE_CATEGORIES'] }}
@@ -40,7 +51,7 @@
                                 <i class="fa fa-edit"></i>&nbsp;
                                 {{ dictionary['EDIT'] }}
                             </a>
-                            <a href="#" class="btn btn-xs btn-danger">
+                            <a href="?do=delete&category_id={{ i[0] }}" class="btn btn-xs btn-danger">
                                 <i class="fa fa-times"></i>&nbsp;
                                 {{ dictionary['DELETE'] }}
                             </a>

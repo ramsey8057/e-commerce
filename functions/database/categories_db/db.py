@@ -39,3 +39,13 @@ def get_category_data(category_id):
     )
     con.close()
     return row[0]
+
+def del_category(category_id):
+    con = connect_to_db()
+    row = execute_dml_query(
+        con,
+        'DELETE FROM categories WHERE category_id={}'.format(
+            category_id
+        )
+    )
+    return row

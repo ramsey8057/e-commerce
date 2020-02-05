@@ -54,7 +54,7 @@ def categories():
                     err_msg=err_msg,
                 )
             elif do == 'delete':
-                pass
+                return redirect(url_for('.delete_category', category_id=request.args.get('category_id')))
             else:
                 return redirect(url_for('.categories'))
         else:
@@ -275,3 +275,18 @@ def edit_category():
                 return abort(503)
     else:
         return redirect('/admin')
+
+@control_categories.route('/admin/category/delete/<category_id>')
+def delete_category(category_id):
+    try:
+        if session['username'] != '' and session['password']:
+            row = del_category(category_id)
+            return redirect(url_for('.categories', deleted=row))
+        else:
+            return redirect('/admin')
+    except:
+        try:
+            return redirect('/admin')
+        except:
+            # TODO: redirect to the 404 page
+            return abort(404)
