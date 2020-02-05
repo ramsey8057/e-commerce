@@ -77,4 +77,6 @@ lang = {
     'COMMENTS_DISABLED'                                 : 'التعليقات معطلة',
     'ADS_DISABLED'                                      : 'الإعلانات معطلة',
     'NEW_CATEGORY'                                      : 'فئة جديدة',
+    'EDIT_CATEGORY'                                     : 'تحرير الفئة',
+    'UPDATE_CATEGORY_FAILED_MSG'                        : 'فشل تحديث الفئة',
 }

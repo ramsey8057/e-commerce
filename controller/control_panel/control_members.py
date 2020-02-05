@@ -3,6 +3,7 @@ import datetime
 from flask import Blueprint, render_template, abort, redirect, url_for, request, session
 from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
+from functions.database.members_db.db import *
 from functions.database.db import *
 
 control_members = Blueprint('control_members', __name__, template_folder='templates')
@@ -32,9 +33,9 @@ def dashboard():
                 lang = ar
             else:
                 lang = en
-            users_count = get_users_count()
-            pending_users_count = get_pending_users_count()
-            latest_users = get_latest_registerd_users()
+            users_count = get_members_count()
+            pending_users_count = get_pending_members_count()
+            latest_users = get_latest_registerd_members()
             return render_template(
                 'control_panel/dashboard.html',
                dictionary=lang,
@@ -86,6 +87,8 @@ def login():
         except:
             session['language'] = 'en'
         return redirect(url_for('.index'))
+    else:
+        return redirect('/admin')
 
 @control_members.route('/admin/change_language')
 def change_language():
@@ -121,7 +124,7 @@ def members():
                 lang = en
             do = request.args.get('do')
             if do == None:
-                users = get_all_users()
+                users = get_all_members()
                 deleted = request.args.get('deleted')
                 activated = request.args.get('activated')
                 return render_template(
@@ -135,7 +138,7 @@ def members():
                 )
             elif do == 'edit':
                 user_id = request.args['user_id']
-                user_data = get_user(user_id)
+                user_data = get_member(user_id)
                 edit_done = request.args.get('edit_done')
                 err_msg   = request.args.get('err_msg')
                 note      = request.args.get('note')
@@ -159,7 +162,7 @@ def members():
             elif do == 'activate':
                 return redirect(url_for('.activate_member',user_id=request.args['user_id']))
             elif do == 'pending':
-                users = get_all_users()
+                users = get_all_members()
                 deleted = request.args.get('deleted')
                 activated = request.args.get('activated')
                 return render_template(
@@ -315,6 +318,8 @@ def edit_member():
                     )
                 # TODO: redirect to the 503 page
                 return abort(503)
+    else:
+        return redirect('/admin')
 
 @control_members.route('/admin/members/add_member', methods=['POST',])
 def add_member():
@@ -439,6 +444,8 @@ def add_member():
                     return redirect(url_for('.members', do='add', add_done=False, err_msg=lang['CPASSWORD_ERR_MSG']))
                 # TODO: redirect to the 503 page
                 return abort(503)
+    else:
+        return redirect('/admin')
 
 @control_members.route('/admin/members/delete/<user_id>')
 def delete_member(user_id):
@@ -456,7 +463,7 @@ def delete_member(user_id):
 def activate_member(user_id):
     try:
         row = ac_member(user_id)
-        return redirect(url_for('.members'), activated=row)
+        return redirect(url_for('.members', activated=row))
     except:
         try:
             return redirect(url_for('.members'))

@@ -77,4 +77,6 @@ lang = {
     'COMMENTS_DISABLED'                                 : 'Comments Disabled',
     'ADS_DISABLED'                                      : 'Ads Disabled',
     'NEW_CATEGORY'                                      : 'New Category',
+    'EDIT_CATEGORY'                                     : 'Edit Category',
+    'UPDATE_CATEGORY_FAILED_MSG'                        : 'Update category failed',
 }

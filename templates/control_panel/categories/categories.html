@@ -36,7 +36,7 @@
                 {% for i in categories %}
                     <div class="category">
                         <div class="hidden-buttons">
-                            <a href="#" class="btn btn-xs btn-info">
+                            <a href="?do=edit&category_id={{ i[0] }}" class="btn btn-xs btn-info">
                                 <i class="fa fa-edit"></i>&nbsp;
                                 {{ dictionary['EDIT'] }}
                             </a>
@@ -60,7 +60,7 @@
                     <hr />
                 {% endfor %}
             </div>
-            <a href="?do=add" class="btn btn-primary" style="margin-top: 15px;"><i class="fa fa-plus"></i> {{ dictionary['NEW_CATEGORY'] }}</a>
+            <a href="?do=add" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 20px;"><i class="fa fa-plus"></i> {{ dictionary['NEW_CATEGORY'] }}</a>
         </div>
     </body>
 {% endblock %}
