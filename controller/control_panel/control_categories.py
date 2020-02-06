@@ -5,6 +5,7 @@ from functions.database.categories_db.db import *
 
 control_categories = Blueprint('control_categories', __name__, template_folder='templates')
 
+
 @control_categories.route('/admin/categories')
 def categories():
     try:
@@ -14,17 +15,16 @@ def categories():
             else:
                 lang = en
             do = request.args.get('do')
-            if do == None:
+            if do is None:
                 sort = request.args.get('sort')
                 if sort != 'ASC' and sort != 'DESC':
                     sort = 'ASC'
-                categories = get_all_categories(sort)
                 deleted = request.args.get('deleted')
                 return render_template(
                     'control_panel/categories/categories.html',
                     dictionary=lang,
                     session=session,
-                    categories=categories,
+                    categories=get_all_categories(sort),
                     deleted=deleted,
                     sort=sort,
                 )
@@ -57,14 +57,17 @@ def categories():
                 return redirect(url_for('.categories'))
         else:
             return redirect('/admin')
-    except:
+    except Exception as e:
+        print(e)
         try:
             return redirect('/admin')
-        except:
+        except Exception as e:
+            print(e)
             # TODO: redirect to the 404 page
             abort(404)
 
-@control_categories.route('/admin/categories/add_category', methods=['POST',])
+
+@control_categories.route('/admin/categories/add_category', methods=['POST'])
 def add_category():
     if request.method == 'POST':
         category_id = get_new_category_id()
@@ -99,7 +102,8 @@ def add_category():
                 else:
                     try:
                         order = int(order)
-                    except:
+                    except Exception as e:
+                        print(e)
                         raise Exception('invalid category order')
             # connect to the database and insert the category
             con = connect_to_db()
@@ -107,23 +111,23 @@ def add_category():
                 con,
                 '''
                 INSERT INTO categories (
-                                category_id,
-                                category_name,
-                                category_description,
-                                category_order,
-                                category_visibility,
-                                category_allow_comment,
-                                category_allow_ads
-                            )
-                        VALUES (
-                            {},
-                            '{}',
-                            '{}',
-                            {},
-                            {},
-                            {},
-                            {}
-                        )
+                    category_id,
+                    category_name,
+                    category_description,
+                    category_order,
+                    category_visibility,
+                    category_allow_comment,
+                    category_allow_ads
+                )
+                VALUES (
+                    {},
+                    '{}',
+                    '{}',
+                    {},
+                    {},
+                    {},
+                    {}
+                )
                 '''.format(
                     category_id,
                     name,
@@ -148,30 +152,71 @@ def add_category():
                 lang = en
             if 'already exists' in e:
                 if 'category_name' in e:
-                    return redirect(url_for('.categories', do='add', add_done=False,
-                                            err_msg='{} "{}" {}'.format(lang['CATEGORY'], name,
-                                                                        lang['NOT_AVAILABLE'])))
+                    return redirect(
+                        url_for(
+                            '.categories',
+                            do='add',
+                            add_done=False,
+                            err_msg='{} "{}" {}'.format(
+                                lang['CATEGORY'],
+                                name,
+                                lang['NOT_AVAILABLE']
+                            )
+                        )
+                    )
                 elif 'category_order' in e:
-                    return redirect(url_for('.categories', do='add', add_done=False,
-                                            err_msg='{} "{}" {}'.format(lang['CATEGORY_ORDER', order,
-                                                                        lang['NOT_AVAILABLE']])))
+                    return redirect(
+                        url_for(
+                            '.categories',
+                            do='add',
+                            add_done=False,
+                            err_msg='{} "{}" {}'.format(
+                                lang['CATEGORY_ORDER'],
+                                order,
+                                lang['NOT_AVAILABLE']
+                            )
+                        )
+                    )
             else:
                 if e == 'invalid category name':
-                    return redirect(url_for('.categories', do='add', add_done=False, err_msg=lang['CATEGORY_NAME_ERR_MSG']))
+                    return redirect(
+                        url_for(
+                            '.categories',
+                            do='add',
+                            add_done=False,
+                            err_msg=lang['CATEGORY_NAME_ERR_MSG']
+                        )
+                    )
                 elif e == 'invalid category description':
-                    return redirect(url_for('.categories', do='add', add_done=False, err_msg=lang['CATEGORY_DESCRIPTION_ERR_MSG']))
+                    return redirect(
+                        url_for(
+                            '.categories',
+                            do='add',
+                            add_done=False,
+                            err_msg=lang['CATEGORY_DESCRIPTION_ERR_MSG']
+                        )
+                    )
                 elif e == 'invalid category order':
-                    return redirect(url_for('.categories', do='add', add_done=False, err_msg=lang['CATEGORY_ORDER_ERR_MSG']))
+                    return redirect(
+                        url_for(
+                            '.categories',
+                            do='add',
+                            add_done=False,
+                            err_msg=lang['CATEGORY_ORDER_ERR_MSG']
+                        )
+                    )
                 # TODO: redirect to the 503 page
                 return abort(503)
     else:
         return redirect('/admin')
 
-@control_categories.route('/admin/categories/edit_category', methods=['POST',])
+
+@control_categories.route('/admin/categories/edit_category', methods=['POST'])
 def edit_category():
     if request.method == 'POST':
         category_name = None
         category_order = None
+        category_id = None
         try:
             # fetch the data from the request
             category_id = request.form['category_id']
@@ -202,7 +247,8 @@ def edit_category():
                 else:
                     try:
                         category_order = int(category_order)
-                    except:
+                    except Exception as e:
+                        print(e)
                         raise Exception('invalid category order')
             # connect to the database and insert the category
             con = connect_to_db()
@@ -232,9 +278,23 @@ def edit_category():
             # close the database connection
             con.close()
             if rowcount >= 1:
-                return redirect(url_for('.categories', do='edit', edit_done=True, category_id=category_id))
+                return redirect(
+                    url_for(
+                        '.categories',
+                        do='edit',
+                        edit_done=True,
+                        category_id=category_id
+                    )
+                )
             else:
-                return redirect(url_for('.categories', do='edit', edit_done=False, category_id=category_id))
+                return redirect(
+                    url_for(
+                        '.categories',
+                        do='edit',
+                        edit_done=False,
+                        category_id=category_id
+                    )
+                )
         except Exception as e:
             e = str(e)
             if session['language'] == 'ar':
@@ -243,24 +303,66 @@ def edit_category():
                 lang = en
             if 'already exists' in e:
                 if 'category_name' in e:
-                    return redirect(url_for('.categories', do='edit', edit_done=False, category_id=category_id,
-                                            err_msg='{} "{}" {}'.format(lang['CATEGORY'], category_name,
-                                                                        lang['NOT_AVAILABLE'])))
+                    return redirect(
+                        url_for(
+                            '.categories',
+                            do='edit',
+                            edit_done=False,
+                            category_id=category_id,
+                            err_msg='{} "{}" {}'.format(
+                                lang['CATEGORY'],
+                                category_name,
+                                lang['NOT_AVAILABLE']
+                            )
+                        )
+                    )
                 elif 'category_order' in e:
-                    return redirect(url_for('.categories', do='edit', edit_done=False, category_id=category_id,
-                                            err_msg='{} "{}" {}'.format(lang['CATEGORY_ORDER'], category_order,
-                                                                             lang['NOT_AVAILABLE'])))
+                    return redirect(
+                        url_for(
+                            '.categories',
+                            do='edit',
+                            edit_done=False,
+                            category_id=category_id,
+                            err_msg='{} "{}" {}'.format(
+                                lang['CATEGORY_ORDER'],
+                                category_order,
+                                lang['NOT_AVAILABLE']
+                            )
+                        )
+                    )
             else:
                 if e == 'invalid category name':
-                    return redirect(url_for('.categories', do='edit', edit_done=False, err_msg=lang['CATEGORY_NAME_ERR_MSG']))
+                    return redirect(
+                        url_for(
+                            '.categories',
+                            do='edit',
+                            edit_done=False,
+                            err_msg=lang['CATEGORY_NAME_ERR_MSG']
+                        )
+                    )
                 elif e == 'invalid category description':
-                    return redirect(url_for('.categories', do='edit', edit_done=False, err_msg=lang['CATEGORY_DESCRIPTION_ERR_MSG']))
+                    return redirect(
+                        url_for(
+                            '.categories',
+                            do='edit',
+                            edit_done=False,
+                            err_msg=lang['CATEGORY_DESCRIPTION_ERR_MSG']
+                        )
+                    )
                 elif e == 'invalid category order':
-                    return redirect(url_for('.categories', do='edit', edit_done=False, err_msg=lang['CATEGORY_ORDER_ERR_MSG']))
+                    return redirect(
+                        url_for(
+                            '.categories',
+                            do='edit',
+                            edit_done=False,
+                            err_msg=lang['CATEGORY_ORDER_ERR_MSG']
+                        )
+                    )
                 # TODO: redirect to the 503 page
                 return abort(503)
     else:
         return redirect('/admin')
+
 
 @control_categories.route('/admin/category/delete/<category_id>')
 def delete_category(category_id):
@@ -270,9 +372,11 @@ def delete_category(category_id):
             return redirect(url_for('.categories', deleted=row))
         else:
             return redirect('/admin')
-    except:
+    except Exception as e:
+        print(e)
         try:
             return redirect('/admin')
-        except:
+        except Exception as e:
+            print(e)
             # TODO: redirect to the 404 page
             return abort(404)
