@@ -80,7 +80,6 @@ lang = {
     'EDIT_CATEGORY'                                     : 'Edit Category',
     'UPDATE_CATEGORY_FAILED_MSG'                        : 'Update category failed',
     'CATEGORY_DELETED'                                  : 'category deleted',
-    # HERE
     'ADD_ITEM'                                          : 'Add New Item',
     'ADD_ITEM_SUCCESS'                                  : 'Item added successfully',
     'ADD_ITEM_FAILED_MSG'                               : 'Add item failed',
