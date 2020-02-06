@@ -83,7 +83,7 @@
                 <!-- submit field -->
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <input type="submit" value="{{ dictionary['SAVE'] }}" class="btn btn-primary btn-lg" />
+                        <input type="submit" value="{{ dictionary['ADD_CATEGORY'] }}" class="btn btn-primary btn-lg" />
                     </div>
                 </div>
             </form>
@@ -92,5 +92,5 @@
 {% endblock %}
 
 {% block admin_scripts_link %}
-    <script src="{{ url_for('static', filename='layouts/js/category/add_category.js') }}"></script>
+    <script src="{{ url_for('static', filename='layouts/js/categories/add_category.js') }}"></script>
 {% endblock %}

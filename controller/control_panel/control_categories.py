@@ -59,8 +59,7 @@ def categories():
                 return redirect(url_for('.categories'))
         else:
             return redirect('/admin')
-    except Exception as e:
-        print(e)
+    except:
         try:
             return redirect('/admin')
         except:

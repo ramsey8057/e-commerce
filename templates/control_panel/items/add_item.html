@@ -1,0 +1,104 @@
+{% extends 'control_panel/members/base.html' %}
+
+{% block admin_title %}
+    Add Members
+{% endblock %}
+
+{% block admin_css_link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/items/add_item.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/jquery-ui.min.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/jquery.selectBoxIt.css') }}" >
+{% endblock %}
+
+{% block admin_content %}
+    <body>
+        {% with args=[session['fullname'], dictionary, 'items', session['user_id']] %}
+            {% include 'control_panel/navbar.html' %}
+        {% endwith %}
+
+        <h1 class="text-center">{{ dictionary['ADD_ITEM'] }}</h1>
+        <div class="container ">
+            {% if add_done == 'True' %}
+                <div class="alert alert-success" role="alert">
+                {{ dictionary['ADD_ITEM_SUCCESS'] }} :)
+                </div>
+            {% elif add_done == 'False' %}
+                {% if err_msg %}
+                    <div class="alert alert-danger" role="alert">
+                    {{ err_msg }} :(
+                    </div>
+                    {% if note %}
+                        <div class="alert alert-warning" role="alert">
+                        {{ note }}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                    {{ dictionary['ADD_ITEM_FAILED_MSG'] }} :(
+                    </div>
+                {% endif %}
+            {% endif %}
+            <form action="items/add_item" method="POST" class="form-horizontal">
+                <!-- item name field -->
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label">{{ dictionary['ITEM_NAME'] }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="name" class="form-control form-control-lg" placeholder="{{ dictionary['ADD_ITEM_NAME_PLACEHOLDER'] }}" required />
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <!-- item description field -->
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label">{{ dictionary['ITEM_DESCRIPTION'] }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="description" class="form-control form-control-lg" placeholder="{{ dictionary['ADD_ITEM_DESCRIPTION_PLACEHOLDER'] }}" />
+                    </div>
+                </div>
+                <!-- item price field -->
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label">{{ dictionary['ITEM_PRICE'] }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="price" class="form-control form-control-lg" placeholder="{{ dictionary['ADD_ITEM_PRICE_PLACEHOLDER'] }}" required />
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <!-- item price field -->
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label">{{ dictionary['COUNTRY_OF_MANUFACTURE'] }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="country_of_manufacture" class="form-control form-control-lg" placeholder="{{ dictionary['ADD_ITEM_COUNTRY_OF_MANUFACTURE_PLACEHOLDER'] }}" />
+                    </div>
+                </div>
+                <!-- item image field -->
+                <!-- TODO: add the image upload field here -->
+                <!-- item status field -->
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label">{{ dictionary['ITEM_STATUS'] }}</label>
+                    <div class="col-sm-10">
+                        <select name="status" required>
+                            <option value="0">{{ dictionary['CHOOSE_ONE_OPTION'] }}</option>
+                            <option value="1">{{ dictionary['NEW'] }}</option>
+                            <option value="2">{{ dictionary['LIKE_NEW'] }}</option>
+                            <option value="3">{{ dictionary['USED'] }}</option>
+                            <option value="4">{{ dictionary['OLD'] }}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- submit field -->
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" value="{{ dictionary['ADD_ITEM'] }}" class="btn btn-primary btn-lg" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+{% endblock %}
+
+{% block admin_scripts_link %}
+    <script src="{{ url_for('static', filename='layouts/js/items/add_item.js') }}"></script>
+    <script src="{{ url_for('static', filename='layouts/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='layouts/js/jquery.selectBoxIt.min.js') }}"></script>
+{% endblock %}

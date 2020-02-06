@@ -1,6 +1,7 @@
 from flask import Flask
 from controller.control_panel.control_members import control_members
 from controller.control_panel.control_categories import control_categories
+from controller.control_panel.control_items import control_items
 
 # configure the apps
 e_commerce = Flask(__name__)
@@ -9,6 +10,7 @@ e_commerce.secret_key = 'DevAhmed2772003@#'
 # register blueprints
 e_commerce.register_blueprint(control_members)
 e_commerce.register_blueprint(control_categories)
+e_commerce.register_blueprint(control_items)
 # create the index page
 @e_commerce.route('/')
 def index():
