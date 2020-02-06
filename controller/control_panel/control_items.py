@@ -10,6 +10,7 @@ from functions.database.items_db.db import *
 control_items = Blueprint('control_items', __name__, template_folder='templates')
 images_path = 'static/data/uploads/images'
 
+
 @control_items.route('/admin/items')
 def items():
     try:
@@ -19,7 +20,7 @@ def items():
             else:
                 lang = en
             do = request.args.get('do')
-            if do == None:
+            if do is None:
                 return 'Welcome to items page'
             elif do == 'edit':
                 pass
@@ -41,14 +42,17 @@ def items():
                 pass
             else:
                 return redirect(url_for('.items'))
-    except:
+    except Exception as e:
+        print(e)
         try:
             return redirect('/admin')
-        except:
+        except Exception as e:
+            print(e)
             # TODO: redirect to the 404 page
             abort(404)
 
-@control_items.route('/admin/items/add_item', methods=['POST',])
+
+@control_items.route('/admin/items/add_item', methods=['POST'])
 def add_item():
     if request.method == 'POST':
         item_id = get_new_item_id()
@@ -68,7 +72,8 @@ def add_item():
                 if 'image' in str(item_image.content_type):
                     try:
                         item_price = int(item_price)
-                    except:
+                    except Exception as e:
+                        print(e)
                         raise Exception('invalid item price')
                 else:
                     raise Exception('invalid item image')
@@ -133,7 +138,6 @@ def add_item():
             else:
                 return redirect(url_for('.items', do='add', add_done=False))
         except Exception as e:
-            print(e)
             e = str(e)
             if session['language'] == 'ar':
                 lang = ar
@@ -142,7 +146,14 @@ def add_item():
             if 'already exists' in e:
                 return redirect(url_for('.items', do='add', add_done=False))
             elif 'invalid item status' in e:
-                return redirect(url_for('.items', do='add', add_done=False, err_msg=lang['INVALID_ITEM_STATUS_ERR_MSG']))
+                return redirect(
+                    url_for(
+                        '.items',
+                        do='add',
+                        add_done=False,
+                        err_msg=lang['INVALID_ITEM_STATUS_ERR_MSG']
+                    )
+                )
             elif 'invalid item price' in e:
                 return redirect(url_for('.items', do='add', add_done=False, err_msg=lang['INVALID_ITEM_PRICE_ERR_MSG']))
             elif 'invalid item image' in e:
