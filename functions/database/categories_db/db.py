@@ -48,4 +48,14 @@ def del_category(category_id):
             category_id
         )
     )
+    con.close()
+    return row
+
+def get_categories_names():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT category_id, category_name FROM categories ORDER BY category_order'
+    )
+    con.close()
     return row

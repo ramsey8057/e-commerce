@@ -40,7 +40,7 @@
                     </div>
                 {% endif %}
             {% endif %}
-            <form action="items/add_item" method="POST" class="form-horizontal">
+            <form action="items/add_item" method="POST" enctype="multipart/form-data" class="form-horizontal">
                 <!-- item name field -->
                 <div class="form-group row" style="padding-bottom: 15px;">
                     <label class="col-sm-2 col-form-label">{{ dictionary['ITEM_NAME'] }}</label>
@@ -72,7 +72,12 @@
                     </div>
                 </div>
                 <!-- item image field -->
-                <!-- TODO: add the image upload field here -->
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label" for="image">{{ dictionary['ITEM_IMAGE'] }}</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control-file" name="image">
+                    </div>
+                 </div>
                 <!-- item status field -->
                 <div class="form-group row" style="padding-bottom: 15px;">
                     <label class="col-sm-2 col-form-label">{{ dictionary['ITEM_STATUS'] }}</label>
@@ -83,6 +88,17 @@
                             <option value="2">{{ dictionary['LIKE_NEW'] }}</option>
                             <option value="3">{{ dictionary['USED'] }}</option>
                             <option value="4">{{ dictionary['OLD'] }}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- item category field -->
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label">{{ dictionary['ITEM_CATEGORY'] }}</label>
+                    <div class="col-sm-10">
+                        <select name="category" required>
+                            {% for i in categories %}
+                                <option value="{{ i[0] }}">{{ i[1] }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>

@@ -99,4 +99,9 @@ lang = {
     'USED'                                              : 'Used',
     'OLD'                                               : 'Old',
     'RATING'                                            : 'Rating',
+    'ITEM_IMAGE'                                        : 'Item Image',
+    'ITEM_CATEGORY'                                     : 'Item Category',
+    'INVALID_ITEM_STATUS_ERR_MSG'                       : 'The item status shouldn\'t be empty',
+    'INVALID_ITEM_PRICE_ERR_MSG'                        : 'Invalid item price the field should contain only integers',
+    'INVALID_ITEM_IMAGE_ERR_MSG'                        : 'The item image field should contain only images',
 }

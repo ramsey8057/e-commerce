@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, abort, redirect, url_for, request,
 from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
 from functions.database.categories_db.db import *
-from functions.database.db import *
 
 control_categories = Blueprint('control_categories', __name__, template_folder='templates')
 
@@ -10,7 +9,6 @@ control_categories = Blueprint('control_categories', __name__, template_folder='
 def categories():
     try:
         if session['username'] != '' and session['password'] != '':
-            lang = None
             if session['language'] == 'ar':
                 lang = ar
             else:
@@ -71,11 +69,7 @@ def add_category():
     if request.method == 'POST':
         category_id = get_new_category_id()
         name = ''
-        description = ''
         order = ''
-        is_visible = 1
-        allow_comments = 1
-        allow_ads = 1
         try:
             # fetch the data from the request
             name = request.form['name']
@@ -148,7 +142,6 @@ def add_category():
                 return redirect(url_for('.categories', do='add', add_done=False))
         except Exception as e:
             e = str(e)
-            lang = None
             if session['language'] == 'ar':
                 lang = ar
             else:
@@ -159,7 +152,7 @@ def add_category():
                                             err_msg='{} "{}" {}'.format(lang['CATEGORY'], name,
                                                                         lang['NOT_AVAILABLE'])))
                 elif 'category_order' in e:
-                    return redirect(url_for('.categories', do='add', add_done=True,
+                    return redirect(url_for('.categories', do='add', add_done=False,
                                             err_msg='{} "{}" {}'.format(lang['CATEGORY_ORDER', order,
                                                                         lang['NOT_AVAILABLE']])))
             else:
@@ -177,13 +170,8 @@ def add_category():
 @control_categories.route('/admin/categories/edit_category', methods=['POST',])
 def edit_category():
     if request.method == 'POST':
-        user_id = request.form['category_id']
         category_name = None
-        category_description = None
         category_order = None
-        is_visible = None
-        allow_comments = None
-        allow_ads = None
         try:
             # fetch the data from the request
             category_id = request.form['category_id']
@@ -249,7 +237,6 @@ def edit_category():
                 return redirect(url_for('.categories', do='edit', edit_done=False, category_id=category_id))
         except Exception as e:
             e = str(e)
-            lang = None
             if session['language'] == 'ar':
                 lang = ar
             else:

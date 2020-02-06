@@ -15,7 +15,7 @@ def execute_dql_query(con, query):
     cur = con.cursor()
     cur.execute(query)
     rows = cur.fetchall()
-    return rows # gonna return array of tubles
+    return rows  # gonna return array of tuples
 
 def execute_dml_query(con, query):
     cur = con.cursor()

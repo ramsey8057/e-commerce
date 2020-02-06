@@ -79,3 +79,12 @@ def get_latest_registerd_members():
     )
     con.close()
     return row
+
+def get_member_id(username):
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT user_id FROM users WHERE username=\'{}\''.format(username)
+    )
+    con.close()
+    return row[0][0]

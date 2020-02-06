@@ -4,7 +4,6 @@ from flask import Blueprint, render_template, abort, redirect, url_for, request,
 from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
 from functions.database.members_db.db import *
-from functions.database.db import *
 
 control_members = Blueprint('control_members', __name__, template_folder='templates')
 
@@ -28,7 +27,6 @@ def index():
 def dashboard():
     try:
         if session['username'] != '' and session['password'] != '':
-            lang = None
             if session['language'] == 'ar':
                 lang = ar
             else:
@@ -117,7 +115,6 @@ def logout():
 def members():
     try:
         if session['username'] != '' and session['password'] != '':
-            lang = None
             if session['language'] == 'ar':
                 lang = ar
             else:
@@ -175,12 +172,10 @@ def members():
                     pending=True
                 )
             else:
-                user_id = request.args['user_id']
                 return redirect(url_for('.members'))
         else:
             return redirect(url_for('.index'))
     except Exception as e:
-        print(e)
         try:
             return redirect(url_for('.index'))
         except:
@@ -191,17 +186,15 @@ def members():
 def edit_member():
     if request.method == 'POST':
         user_id = request.form['user_id']
-        username  = None
-        password  = None
-        email     = None
-        full_name = None
+        username = None
+        email = None
         try:
             # fetch the data from the request
-            username  = request.form['username']
-            username  = username.strip()
-            password  = request.form['password']
-            password  = password.strip()
-            email     = request.form['email']
+            username = request.form['username']
+            username = username.strip()
+            password = request.form['password']
+            password = password.strip()
+            email = request.form['email']
             full_name = request.form['fullname']
             # validate the inputs
             if len(username) < 3 or username == '':
@@ -218,7 +211,6 @@ def edit_member():
             password = h.hexdigest()
             # connect to the database and update the user
             con = connect_to_db()
-            rowcount = 0
             if password != '':
                 rowcount = execute_dml_query(
                     con,
@@ -248,7 +240,6 @@ def edit_member():
                 return redirect(url_for('.members'))
         except Exception as e:
             e = str(e)
-            lang = None
             if session['language'] == 'ar':
                 lang = ar
             else:
@@ -324,25 +315,20 @@ def edit_member():
 @control_members.route('/admin/members/add_member', methods=['POST',])
 def add_member():
     if request.method == 'POST':
-        user_id    = get_new_member_id()
-        username   = None
-        password   = None
-        cpassword  = None
-        email      = None
-        full_name  = None
-        group_id   = None
-        reg_status = None
+        user_id = get_new_member_id()
+        username = None
+        email = None
         try:
             # fetch the data from the request
-            username   = request.form['username']
-            username   = username.strip()
-            password   = request.form['password']
-            password   = password.strip()
-            cpassword  = request.form['cpassword']
-            cpassword  = cpassword.strip()
-            email      = request.form['email']
-            full_name  = request.form['fullname']
-            group_id   = request.form.get('group_id')
+            username = request.form['username']
+            username = username.strip()
+            password = request.form['password']
+            password = password.strip()
+            cpassword = request.form['cpassword']
+            cpassword = cpassword.strip()
+            email = request.form['email']
+            full_name = request.form['fullname']
+            group_id = request.form.get('group_id')
             reg_status = request.form.get('reg_status')
             # validate the inputs
             if group_id == 'on':
@@ -365,10 +351,8 @@ def add_member():
                         if len(full_name) < 7 or full_name.strip() == '':
                             raise Exception('invalid full name')
             # encode the password
-            h         = hashlib.md5(password.encode())
-            password  = h.hexdigest()
-            h         = hashlib.md5(cpassword.encode())
-            cpassword = h.hexdigest()
+            h = hashlib.md5(password.encode())
+            password = h.hexdigest()
             # connect to the database and insert the user
             con = connect_to_db()
             rowcount = execute_dml_query(
@@ -417,7 +401,6 @@ def add_member():
                 return redirect(url_for('.members', do='add', add_done=False))
         except Exception as e:
             e = str(e)
-            lang = None
             if session['language'] == 'ar':
                 lang = ar
             else:
