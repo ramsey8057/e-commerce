@@ -75,7 +75,7 @@ def get_latest_registerd_members():
     con = connect_to_db()
     row = execute_dql_query(
         con,
-        'SELECT user_id, fullname, reg_status FROM users ORDER BY user_id LIMIT 5'
+        'SELECT user_id, fullname, reg_status FROM users ORDER BY user_id DESC LIMIT 5'
     )
     con.close()
     return row
