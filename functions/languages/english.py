@@ -34,7 +34,7 @@ lang = {
     'ADD_MEMBER_FULL_NAME_PLACEHOLDER'                  : 'Your full name will appear to the other members',
     'ADMIN'                                             : 'Admin',
     'REGISTERED'                                        : 'Registered',
-    'CPASSWORD_ERR_MSG'                                 : 'Password does not match',
+    'C_PASSWORD_ERR_MSG'                                 : 'Password does not match',
     'UPDATE_USER_DONE_MSG'                              : 'User updated successfully',
     'UPDATE_USER_FAILED_MSG'                            : 'Update user failed',
     'ADD_USER_DONE_MSG'                                 : 'User added successfully',

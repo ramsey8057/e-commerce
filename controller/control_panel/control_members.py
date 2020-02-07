@@ -397,8 +397,8 @@ def add_member():
             username = username.strip()
             password = request.form['password']
             password = password.strip()
-            cpassword = request.form['cpassword']
-            cpassword = cpassword.strip()
+            c_password = request.form['c_password']
+            c_password = c_password.strip()
             email = request.form['email']
             full_name = request.form['fullname']
             group_id = request.form.get('group_id')
@@ -418,8 +418,8 @@ def add_member():
                 if len(password) < 8 or len(password) > 20:
                     raise Exception('invalid password')
                 else:
-                    if cpassword != password:
-                        raise Exception('invalid cpassword')
+                    if c_password != password:
+                        raise Exception('invalid c_password')
                     else:
                         if len(full_name) < 7 or full_name.strip() == '':
                             raise Exception('invalid full name')
@@ -536,13 +536,13 @@ def add_member():
                             note=lang['PASSWORD_NOTE']
                         )
                     )
-                elif e == 'invalid cpassword':
+                elif e == 'invalid c_password':
                     return redirect(
                         url_for(
                             '.members',
                             do='add',
                             add_done=False,
-                            err_msg=lang['CPASSWORD_ERR_MSG']
+                            err_msg=lang['C_PASSWORD_ERR_MSG']
                         )
                     )
                 # TODO: redirect to the 503 page

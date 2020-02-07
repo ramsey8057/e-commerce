@@ -34,7 +34,7 @@ lang = {
     'ADD_MEMBER_FULL_NAME_PLACEHOLDER'                  : 'سيظهر اسمك الكامل للمستخدمين الآخرين',
     'ADMIN'                                             : 'مشرف',
     'REGISTERED'                                        : 'مسجل',
-    'CPASSWORD_ERR_MSG'                                 : 'كلمة السر غير متطابقة',
+    'C_PASSWORD_ERR_MSG'                                 : 'كلمة السر غير متطابقة',
     'UPDATE_USER_DONE_MSG'                              : 'تم تحديث المستخدم بنجاح',
     'UPDATE_USER_FAILED_MSG'                            : 'فشل تحديث المستخدم',
     'ADD_USER_DONE_MSG'                                 : 'تمت إضافة المستخدم بنجاح',
