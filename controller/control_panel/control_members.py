@@ -126,7 +126,8 @@ def change_language():
         else:
             session['language'] = 'en'
         return redirect(url_for('.index'))
-    except:
+    except Exception as e:
+        print(e)
         # TODO: redirect to the 404 page
         abort(404)
 
@@ -384,7 +385,7 @@ def edit_member():
         return redirect('/admin')
 
 
-@control_members.route('/admin/members/add_member', methods=['POST',])
+@control_members.route('/admin/members/add_member', methods=['POST'])
 def add_member():
     if request.method == 'POST':
         user_id = get_new_member_id()
