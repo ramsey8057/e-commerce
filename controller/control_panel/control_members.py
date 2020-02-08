@@ -150,6 +150,7 @@ def members():
         username = request.cookies.get('username')
         password = request.cookies.get('password')
         language = request.cookies.get('language')
+        user_id = get_member_id(request.cookies.get('username'))
         if check_user(username, password):
             if language == 'ar':
                 lang = ar
@@ -163,11 +164,12 @@ def members():
                 return render_template(
                     'control_panel/members/members.html',
                     dictionary=lang,
-                    session=session,
+                    session=request.cookies,
                     users=users,
                     deleted=deleted,
                     activated=activated,
-                    pending=False
+                    pending=False,
+                    user_id=user_id,
                 )
             elif do == 'add':
                 add_done = request.args.get('add_done')
@@ -178,7 +180,9 @@ def members():
                     dictionary=lang,
                     add_done=add_done,
                     err_msg=err_msg,
-                    note=note
+                    note=note,
+                    user_id=user_id,
+                    session=request.cookies
                 )
             elif do == 'edit':
                 user_id = request.args.get('user_id')
@@ -189,12 +193,12 @@ def members():
                 return render_template(
                     'control_panel/members/edit_member.html',
                     dictionary=lang,
-                    session=session,
+                    session=request.cookies,
                     user_id=user_id,
                     user_data=user_data,
                     edit_done=edit_done,
                     err_msg=err_msg,
-                    note=note
+                    note=note,
                 )
             elif do == 'delete':
                 return redirect(
@@ -217,11 +221,12 @@ def members():
                 return render_template(
                     'control_panel/members/members.html',
                     dictionary=lang,
-                    session=session,
+                    session=request.cookies,
                     users=users,
                     deleted=deleted,
                     activated=activated,
-                    pending=True
+                    pending=True,
+                    user_id=user_id,
                 )
             else:
                 return redirect(url_for('.members'))

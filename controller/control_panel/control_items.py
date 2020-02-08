@@ -13,6 +13,7 @@ images_path = 'static/data/uploads/images'
 
 @control_items.route('/admin/items')
 def items():
+    user_id = get_member_id(request.cookies.get('username'))
     try:
         if session['username'] != '' and session['password'] != '':
             if session['language'] == 'ar':
@@ -35,6 +36,7 @@ def items():
                     add_done=add_done,
                     err_msg=err_msg,
                     categories=categories,
+                    user_id=user_id,
                 )
             elif do == 'delete':
                 pass
