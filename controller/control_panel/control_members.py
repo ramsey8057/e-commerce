@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, abort, redirect, url_for, request,
 from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
 from functions.database.members_db.db import *
+from functions.members.members import *
 
 control_members = Blueprint('control_members', __name__, template_folder='templates')
 
@@ -11,15 +12,29 @@ control_members = Blueprint('control_members', __name__, template_folder='templa
 @control_members.route('/admin')
 def index():
     try:
-        if session['username'] != '' and session['password'] != '':
-            return redirect(url_for('.dashboard'))
-        else:
+        username = request.cookies.get('ramsey-e-commerce-username')
+        password = request.cookies.get('ramsey-e-commerce-password')
+        print(username)
+        print(password)
+        if username is None or password is None:
             logging_in_failed = request.args.get('logging_in_failed')
             return render_template(
                 'control_panel/members/login.html',
                 dictionary=en,
                 logging_in_failed=logging_in_failed
             )
+        else:
+            lang = request.cookies.get('language')
+            if lang is None or lang == '':
+                lang = 'en'
+            if check_user(username, password, lang):
+                return redirect(url_for('.dashboard'))
+            else:
+                return render_template(
+                    'control_panel/members/login.html',
+                    dictionary=en,
+                    logging_in_failed=True
+                )
     except Exception as e:
         print(e)
         try:
@@ -32,14 +47,17 @@ def index():
         except Exception as e:
             print(e)
             # TODO: redirect to the 404 page
-            abort(404)
+            return abort(404)
 
 
 @control_members.route('/admin/dashboard')
 def dashboard():
     try:
-        if session['username'] != '' and session['password'] != '':
-            if session['language'] == 'ar':
+        username = request.cookies.get('username')
+        password = request.cookies.get('password')
+        language = request.cookies.get('language')
+        if check_user(username, password, language):
+            if language == 'ar':
                 lang = ar
             else:
                 lang = en
@@ -63,86 +81,51 @@ def dashboard():
         except Exception as e:
             print(e)
             # TODO: redirect to the 404 page
-            abort(404)
+            return abort(404)
 
 
-@control_members.route('/admin/admin_login', methods=['POST', ])
+@control_members.route('/admin/admin_login', methods=['POST'])
 def login():
     if request.method == 'POST':
-        # fetch the data from the request
-        username = request.form['username']
-        password = request.form['password']
+        # fetch data from the request
+        username = request.form.get('username')
+        password = request.form.get('password')
         # encode the password
         h = hashlib.md5(password.encode())
         password = h.hexdigest()
-        # connect to the database and check the users
-        con = connect_to_db()
-        row = execute_dql_query(
-            con,
-            '''
-            SELECT
-                user_id,
-                username,
-                password,
-                fullname
-            FROM
-                users
-            WHERE
-                username='{}' AND
-                password='{}' AND
-                group_id=1 AND
-                reg_status=1
-            '''.format(
-                username,
-                password
-            )
-        )
-        # close the database connection
-        con.close()
-        # check the username and password
-        if row is []:
+        # check user
+        if check_user(username, password, 'en'):
+            return redirect(url_for('.index'))
+        else:
             return redirect(url_for('.index', logging_in_failed=True))
-        # redirect to the home page
-        session['username'] = username
-        session['password'] = password
-        session['fullname'] = row[0][3]
-        session['user_id'] = row[0][0]
-        try:
-            if session['language'] is None:
-                session['language'] = 'en'
-        except Exception as e:
-            print(e)
-            session['language'] = 'en'
-        return redirect(url_for('.index'))
     else:
-        return redirect('/admin')
+        return redirect('.index')
 
 
 @control_members.route('/admin/change_language')
 def change_language():
     try:
-        if session['language'] == 'en':
-            session['language'] = 'ar'
+        response = make_response('new response')
+        if request.cookies.get('language') == 'ar':
+            response.set_cookie('language', 'ar')
         else:
-            session['language'] = 'en'
-        return redirect(url_for('.index'))
+            response.set_cookie('language', 'en')
     except Exception as e:
         print(e)
         # TODO: redirect to the 404 page
-        abort(404)
+        return abort(404)
 
 
 @control_members.route('/admin/logout')
 def logout():
     try:
-        session['username'] = ''
-        session['password'] = ''
-        session['fullname'] = ''
+        username = request.cookies.get('username')
+        logout_from_all(username)
         return redirect(url_for('.index'))
     except Exception as e:
         print(e)
         # TODO: redirect to the 404 page
-        abort(404)
+        return abort(404)
 
 
 @control_members.route('/admin/members')
