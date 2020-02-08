@@ -78,8 +78,8 @@ def add_item():
                 else:
                     raise Exception('invalid item image')
             # change the picture name to a unique one
-            divided_name = item_image.filename.split('.')
-            file_extension = divided_name[len(divided_name) - 1]
+            splitted_name = item_image.filename.split('.')
+            file_extension = splitted_name[len(splitted_name) - 1]
             item_image.filename = 'item_{}_image.{}'.format(item_id, file_extension)
             # create the image path
             image_path = os.path.join(images_path, item_image.filename)
