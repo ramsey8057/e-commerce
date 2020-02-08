@@ -14,7 +14,7 @@
 
 {% block admin_content %}
     <body>
-        {% with args=[session['fullname'], dictionary, 'items', session['user_id']] %}
+        {% with args=[session['fullname'], dictionary, 'items', user_id] %}
             {% include 'control_panel/navbar.html' %}
         {% endwith %}
 

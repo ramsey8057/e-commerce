@@ -12,7 +12,7 @@
 
 {% block admin_content %}
     <body>
-        {% with args=[session['fullname'], dictionary, 'categories', session['user_id']] %}
+        {% with args=[session['fullname'], dictionary, 'categories', user_id] %}
             {% include 'control_panel/navbar.html' %}
         {% endwith %}
         <h1 class="text-center">{{ dictionary['MANAGE_CATEGORIES'] }}</h1>
