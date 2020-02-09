@@ -1,11 +1,12 @@
 import os
 import datetime
-from flask import Blueprint, render_template, abort, redirect, url_for, request, session
+from flask import Blueprint, render_template, redirect, url_for, request
 from functions.languages.arabic import lang as ar
 from functions.languages.english import lang as en
 from functions.database.members_db.db import get_member_id
 from functions.database.categories_db.db import get_categories_names
 from functions.database.items_db.db import *
+from functions.members.members import check_user
 
 control_items = Blueprint('control_items', __name__, template_folder='templates')
 images_path = 'static/data/uploads/images'
@@ -15,8 +16,11 @@ images_path = 'static/data/uploads/images'
 def items():
     user_id = get_member_id(request.cookies.get('username'))
     try:
-        if session['username'] != '' and session['password'] != '':
-            if session['language'] == 'ar':
+        username = request.cookies.get('username')
+        password = request.cookies.get('password')
+        if check_user(username, password):
+            language = request.cookies.get('language')
+            if language == 'ar':
                 lang = ar
             else:
                 lang = en
@@ -32,7 +36,7 @@ def items():
                 return render_template(
                     'control_panel/items/add_item.html',
                     dictionary=lang,
-                    session=session,
+                    session=request.cookies,
                     add_done=add_done,
                     err_msg=err_msg,
                     categories=categories,
@@ -44,29 +48,33 @@ def items():
                 pass
             else:
                 return redirect(url_for('.items'))
+        else:
+            return redirect('/admin')
     except Exception as e:
         print(e)
-        try:
-            return redirect('/admin')
-        except Exception as e:
-            print(e)
-            # TODO: redirect to the 404 page
-            abort(404)
+        return redirect('/admin')
 
 
 @control_items.route('/admin/items/add_item', methods=['POST'])
 def add_item():
-    if request.method == 'POST':
-        item_id = get_new_item_id()
-        try:
+    username = request.cookies.get('username')
+    password = request.cookies.get('password')
+    language = request.cookies.get('language')
+    item_id = get_new_item_id()
+    if language == 'ar':
+        lang = ar
+    else:
+        lang = en
+    try:
+        if check_user(username, password):
             # fetch the data from the request
-            item_name = request.form['name']
-            item_description = request.form['description']
-            item_price = request.form['price']
-            country_of_manufacture = request.form['country_of_manufacture']
-            item_image = request.files['image']
-            item_status = request.form['status']
-            category_id = request.form['category']
+            item_name = request.form.get('name')
+            item_description = request.form.get('description')
+            item_price = request.form.get('price')
+            country_of_manufacture = request.form.get('country_of_manufacture')
+            item_image = request.files.get('image')
+            item_status = request.form.get('status')
+            category_id = request.form.get('category')
             # validate the inputs
             if item_status == 0:
                 raise Exception('invalid item status')
@@ -80,8 +88,8 @@ def add_item():
                 else:
                     raise Exception('invalid item image')
             # change the picture name to a unique one
-            splitted_name = item_image.filename.split('.')
-            file_extension = splitted_name[len(splitted_name) - 1]
+            name_array = item_image.filename.split('.')
+            file_extension = name_array[len(name_array) - 1]
             item_image.filename = 'item_{}_image.{}'.format(item_id, file_extension)
             # create the image path
             image_path = os.path.join(images_path, item_image.filename)
@@ -128,7 +136,7 @@ def add_item():
                     image_path,
                     item_status,
                     category_id,
-                    get_member_id(session['username']),
+                    get_member_id(username),
                 )
             )
             # save image to files
@@ -139,28 +147,24 @@ def add_item():
                 return redirect(url_for('.items', do='add', add_done=True))
             else:
                 return redirect(url_for('.items', do='add', add_done=False))
-        except Exception as e:
-            e = str(e)
-            if session['language'] == 'ar':
-                lang = ar
-            else:
-                lang = en
-            if 'already exists' in e:
-                return redirect(url_for('.items', do='add', add_done=False))
-            elif 'invalid item status' in e:
-                return redirect(
-                    url_for(
-                        '.items',
-                        do='add',
-                        add_done=False,
-                        err_msg=lang['INVALID_ITEM_STATUS_ERR_MSG']
-                    )
+        else:
+            return redirect('/admin')
+    except Exception as e:
+        e = str(e)
+        if 'already exists' in e:
+            return redirect(url_for('.items', do='add', add_done=False))
+        elif 'invalid item status' in e:
+            return redirect(
+                url_for(
+                    '.items',
+                    do='add',
+                    add_done=False,
+                    err_msg=lang['INVALID_ITEM_STATUS_ERR_MSG']
                 )
-            elif 'invalid item price' in e:
-                return redirect(url_for('.items', do='add', add_done=False, err_msg=lang['INVALID_ITEM_PRICE_ERR_MSG']))
-            elif 'invalid item image' in e:
-                return redirect(url_for('.items', do='add', add_done=False, err_msg=lang['INVALID_ITEM_IMAGE_ERR_MSG']))
-            else:
-                return redirect(url_for('.items'))
-    else:
-        return redirect(url_for('.members'))
+            )
+        elif 'invalid item price' in e:
+            return redirect(url_for('.items', do='add', add_done=False, err_msg=lang['INVALID_ITEM_PRICE_ERR_MSG']))
+        elif 'invalid item image' in e:
+            return redirect(url_for('.items', do='add', add_done=False, err_msg=lang['INVALID_ITEM_IMAGE_ERR_MSG']))
+        else:
+            return redirect(url_for('.items'))

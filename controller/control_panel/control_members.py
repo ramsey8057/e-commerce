@@ -1,6 +1,6 @@
 import hashlib
 import datetime
-from flask import Blueprint, render_template, abort, redirect, url_for, request, session, make_response
+from flask import Blueprint, render_template, abort, redirect, url_for, request, make_response
 from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
 from functions.database.members_db.db import *

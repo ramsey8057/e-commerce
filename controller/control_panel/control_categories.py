@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort, redirect, url_for, request, session
+from flask import Blueprint, render_template, abort, redirect, url_for, request
 from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
 from functions.database.categories_db.db import *
