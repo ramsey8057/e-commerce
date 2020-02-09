@@ -1,5 +1,6 @@
 import psycopg2
 
+
 def connect_to_db():
     # connect to database
     con = psycopg2.connect(
@@ -10,12 +11,14 @@ def connect_to_db():
     )
     return con
 
+
 def execute_dql_query(con, query):
     # create a cursor
     cur = con.cursor()
     cur.execute(query)
     rows = cur.fetchall()
     return rows  # gonna return array of tuples
+
 
 def execute_dml_query(con, query):
     cur = con.cursor()

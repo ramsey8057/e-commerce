@@ -8,9 +8,9 @@ def get_new_item_id():
         'SELECT item_id FROM items ORDER BY item_id DESC LIMIT 1'
     )
     con.close()
-    if row == []:
+    if row is []:
         return 1
-    return (row[0][0] + 1)
+    return row[0][0] + 1
 
 
 def get_last_5_items():
