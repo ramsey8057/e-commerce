@@ -2,12 +2,19 @@ from flask import Flask
 from controller.control_panel.control_members import control_members
 from controller.control_panel.control_categories import control_categories
 from controller.control_panel.control_items import control_items
+from functions.database.db import create_new_connection
+from general_vars.con import set_con
 
-# configure the apps
+# set the global connection
+con = create_new_connection()
+set_con(con)
+
+# configure the app
 e_commerce = Flask(__name__)
 e_commerce.config['SQLALCHEMY_DATABASE_URI'] =\
     'postgresql://mhqvluwu:SoaOFudyzAgBywON6U3P6vIq02kyC5J5@rajje.db.elephantsql.com/mhqvluwu'
 e_commerce.secret_key = 'DevAhmed2772003@#'
+e_commerce.debug = True
 
 # create the image upload configuration
 e_commerce.config['IMAGE_UPLOADS'] = 'static/data/uploads/images'

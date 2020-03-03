@@ -7,7 +7,6 @@ def get_new_category_id():
         con,
         'SELECT category_id FROM categories ORDER BY category_id DESC LIMIT 1'
     )
-    con.close()
     if row is []:
         return 1
     return row[0][0] + 1
@@ -19,7 +18,6 @@ def get_all_categories(sort):
         con,
         'SELECT * FROM categories ORDER BY category_order {} LIMIT 100'.format(sort)
     )
-    con.close()
     return row
 
 
@@ -29,7 +27,6 @@ def get_categories_count():
         con,
         'SELECT COUNT(category_id) FROM categories'
     )
-    con.close()
     return row[0][0]
 
 
@@ -41,7 +38,6 @@ def get_category_data(category_id):
             category_id,
         )
     )
-    con.close()
     return row[0]
 
 
@@ -53,7 +49,6 @@ def del_category(category_id):
             category_id
         )
     )
-    con.close()
     return row
 
 
@@ -63,5 +58,4 @@ def get_categories_names():
         con,
         'SELECT category_id, category_name FROM categories ORDER BY category_order'
     )
-    con.close()
     return row

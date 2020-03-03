@@ -18,7 +18,6 @@ def get_new_member_id():
         con,
         'SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1'
     )
-    con.close()
     if len(row) == 0:
         return 1
     return row[0][0] + 1
@@ -30,7 +29,6 @@ def get_all_members():
         con,
         'SELECT user_id, username, email, fullname, registration_date, reg_status FROM users ORDER BY user_id LIMIT 100'
     )
-    con.close()
     return row
 
 
@@ -42,7 +40,6 @@ def del_member(user_id):
             user_id
         )
     )
-    con.close()
     return row
 
 
@@ -52,7 +49,6 @@ def get_members_count():
         con,
         'SELECT COUNT(user_id) FROM users'
     )
-    con.close()
     return row[0][0]
 
 
@@ -62,7 +58,6 @@ def get_pending_members_count():
         con,
         'SELECT COUNT(user_id) FROM users WHERE reg_status = 0'
     )
-    con.close()
     return row[0][0]
 
 
@@ -75,7 +70,6 @@ def ac_member(user_id):
         )
     )
     con.commit()
-    con.close()
     return row[0][0]
 
 
@@ -85,7 +79,6 @@ def get_latest_registered_members():
         con,
         'SELECT user_id, fullname, reg_status FROM users ORDER BY user_id DESC LIMIT 5'
     )
-    con.close()
     return row
 
 
@@ -95,7 +88,6 @@ def get_member_id(username):
         con,
         'SELECT user_id FROM users WHERE username=\'{}\''.format(username)
     )
-    con.close()
     return str(row[0][0])
 
 
@@ -105,5 +97,4 @@ def get_member_fullname(username):
         con,
         'SELECT fullname FROM users WHERE username=\'{}\''.format(username)
     )
-    con.close()
     return row[0][0]

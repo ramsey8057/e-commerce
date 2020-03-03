@@ -1,0 +1,63 @@
+{% extends 'control_panel/members/base.html' %}
+
+{% block admin_title %}
+    Items
+{% endblock %}
+
+{% block admin_css_link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/members/members.css') }}">
+{% endblock %}
+
+{% block admin_content %}
+    <body>
+        {% with args=[session['fullname'], dictionary, 'items', user_id] %}
+            {% include 'control_panel/navbar.html' %}
+        {% endwith %}
+        <h1 class="text-center">{{ dictionary['MANAGE_ITEMS'] }}</h1>
+        <div class="container">
+            {% if deleted != None %}
+                {% if dictionary['lang'] == 'en' %}
+                    <div class="alert alert-success" role="alert">
+                      {{ deleted }} {{ dictionary['ITEM_DELETED'] }} :)
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                      :) {{ dictionary['ITEM_DELETED'] }} {{ deleted }} {{ dictionary['ITEMS'] }}
+                    </div>
+                {% endif %}
+            {% endif %}
+            <div class="table-responsive">
+                <table class="main-table text-center table table-bordered">
+                    <tr>
+                        <td>#ID</td>
+                        <td>{{ dictionary['ITEM_NAME'] }}</td>
+                        <td>{{ dictionary['ITEM_DESCRIPTION'] }}</td>
+                        <td>{{ dictionary['ITEM_PRICE'] }}</td>
+                        <td>{{ dictionary['ITEM_ADDING_DATE'] }}</td>
+                        <td>{{ dictionary['ITEM_CATEGORY'] }}</td>
+                        <td>{{ dictionary['ADDED_BY'] }}</td>
+                        <td>{{ dictionary['CONTROL'] }}</td>
+                    </tr>
+                    {% for i in items %}
+                        <tr>
+                            <td>{{ i[0] }}</td>
+                            <td>{{ i[1] }}</td>
+                            <td>{{ i[2] }}</td>
+                            <td>{{ i[3] }}</td>
+                            <td>{{ i[4] }}</td>
+                            <td>{{ i[5] }}</td>
+                            <td>{{ i[6] }}</td>
+                            <td>
+                                <a href="?do=edit&item_id={{ i[0] }}" class="btn btn-info"><i class="fa fa-edit"></i> {{ dictionary['EDIT'] }}</a>
+                                <a href="?do=delete&item_id={{ i[0] }}" class="btn btn-danger activate"><i class="fa fa-times"></i> {{ dictionary['DELETE'] }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <a href="?do=add" class="btn btn-primary"><i class="fa fa-plus"></i> {{ dictionary['NEW_ITEM'] }}</a>
+        </div>
+    </body>
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'control_panel/members/base.html' %}
 
 {% block admin_title %}
-    Add Members
+    Add Item
 {% endblock %}
 
 {% block admin_css_link %}
@@ -19,7 +19,7 @@
         {% endwith %}
 
         <h1 class="text-center">{{ dictionary['ADD_ITEM'] }}</h1>
-        <div class="container ">
+        <div class="container">
             {% if add_done == 'True' %}
                 <div class="alert alert-success" role="alert">
                 {{ dictionary['ADD_ITEM_SUCCESS'] }} :)
@@ -83,7 +83,7 @@
                     <label class="col-sm-2 col-form-label">{{ dictionary['ITEM_STATUS'] }}</label>
                     <div class="col-sm-10">
                         <select name="status" required>
-                            <option value="0">{{ dictionary['CHOOSE_ONE_OPTION'] }}</option>
+                            <option value="0">{{ dictionary['CHOOSE_AN_OPTION'] }}</option>
                             <option value="1">{{ dictionary['NEW'] }}</option>
                             <option value="2">{{ dictionary['LIKE_NEW'] }}</option>
                             <option value="3">{{ dictionary['USED'] }}</option>

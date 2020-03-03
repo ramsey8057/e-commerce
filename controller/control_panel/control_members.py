@@ -5,6 +5,7 @@ from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
 from functions.database.members_db.db import *
 from functions.members.members import *
+from functions.database.items_db.db import get_items_count
 
 control_members = Blueprint('control_members', __name__, template_folder='templates')
 
@@ -86,7 +87,6 @@ def logout():
             )
         )
         # close the database connection
-        con.close()
         response = make_response(redirect(url_for('.index')))
         response.set_cookie('username', max_age=0)
         response.set_cookie('password', max_age=0)
@@ -113,6 +113,7 @@ def dashboard():
         pending_users_count = get_pending_members_count()
         latest_users = get_latest_registered_members()
         user_id = get_member_id(request.cookies.get('username'))
+        items_count = get_items_count()
         return render_template(
             'control_panel/dashboard.html',
             dictionary=lang,
@@ -120,7 +121,8 @@ def dashboard():
             users_count=users_count,
             pending_users_count=pending_users_count,
             latest_users=latest_users,
-            user_id=user_id
+            user_id=user_id,
+            items_count=items_count
         )
     else:
         return redirect(url_for('.index'))
@@ -244,7 +246,7 @@ def add_member():
     user_id = get_new_member_id()
     language = request.cookies.get('language')
     email = None
-    lang = None
+    lang = en
     try:
         if check_user(username, password):
             if language == 'ar':
@@ -326,7 +328,6 @@ def add_member():
                 )
             )
             # close the connection
-            con.close()
             if rowcount >= 1:
                 return redirect(url_for('.members', do='add', add_done=True))
             else:
@@ -482,7 +483,6 @@ def edit_member():
                     ),
                 )
             # close the database connection
-            con.close()
             if rowcount >= 1:
                 return redirect(url_for('.members', do='edit', user_id=user_id, edit_done=True))
             else:

@@ -38,7 +38,6 @@ def check_user_for_log_in(username, password):
                 password
             )
         )
-        con.close()
         if len(row) == 0:
             return False
         else:
@@ -70,7 +69,6 @@ def check_user(username, password):
                 password
             )
         )
-        con.close()
         if len(row) == 0:
             return False
         else:
@@ -95,7 +93,6 @@ def logout_from_all(username):
                 username
             )
         )
-        con.close()
         return True
     except Exception as e:
         print(e)

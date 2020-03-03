@@ -151,7 +151,6 @@ def add_category():
                 )
             )
             # close the connection
-            con.close()
             if rowcount >= 1:
                 return redirect(url_for('.categories', do='add', add_done=True))
             else:
@@ -291,7 +290,6 @@ def edit_category():
                 )
             )
             # close the database connection
-            con.close()
             if rowcount >= 1:
                 return redirect(
                     url_for(

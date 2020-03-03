@@ -1,7 +1,12 @@
 import psycopg2
+from general_vars.con import get_con
 
 
 def connect_to_db():
+    return get_con()
+
+
+def create_new_connection():
     # connect to database
     con = psycopg2.connect(
         host='rajje.db.elephantsql.com',

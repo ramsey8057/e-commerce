@@ -92,7 +92,7 @@ lang = {
     'COUNTRY_OF_MANUFACTURE'                            : 'Country of manufacture',
     'ADD_ITEM_COUNTRY_OF_MANUFACTURE_PLACEHOLDER'       : 'Country of manufacture of the item',
     'ITEM_STATUS'                                       : 'Item Status',
-    'CHOOSE_ONE_OPTION'                                 : 'Choose one option',
+    'CHOOSE_AN_OPTION'                                  : 'Choose an option',
     'NEW'                                               : 'New',
     'LIKE_NEW'                                          : 'Like New',
     'USED'                                              : 'Used',
@@ -103,4 +103,14 @@ lang = {
     'INVALID_ITEM_STATUS_ERR_MSG'                       : 'The item status shouldn\'t be empty',
     'INVALID_ITEM_PRICE_ERR_MSG'                        : 'Invalid item price the field should contain only integers',
     'INVALID_ITEM_IMAGE_ERR_MSG'                        : 'The item image field should contain only images',
+    'UPDATE_ITEM_DONE_MSG'                              : 'Item updated successfully',
+    'UPDATE_ITEM_FAILED_MSG'                            : 'Update item failed',
+    # HERE
+    'MANAGE_ITEMS'                                      : 'Manage Items',
+    'ITEM_DELETED'                                      : 'Item Deleted',
+    'ITEM_APPROVED'                                     : 'Item Approved',
+    'ITEM_ADDING_DATE'                                  : 'Adding date',
+    'ADDED_BY'                                          : 'Added By',
+    'EDIT_ITEM'                                         : 'Edit Item',
+    'NEW_ITEM'                                          : 'New Item'
 }
