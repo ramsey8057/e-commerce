@@ -109,4 +109,12 @@ lang = {
     'ITEM_STATUS_ERR_MSG'                               : 'يجب عليك تحديد حالة العنصر',
     'ITEM_PRICE_ERR_MSG'                                : 'يجب أن يكون سعر العنصر عدد صحيح',
     'ITEM_IMAGE_ERR_MSG'                                : 'صورة عنصر غير صالحة',
+    'MANAGE_ITEMS'                                      : 'إدارة العناصر',
+    'ITEM_DELETED'                                      : 'تم حذف العنصر',
+    'ITEM_APPROVED'                                     : 'وافق العنصر',
+    'ITEM_ADDING_DATE'                                  : 'تاريخ الإضافة',
+    'ADDED_BY'                                          : 'أضيف بواسطة',
+    'EDIT_ITEM'                                         : 'تعديل عنصر',
+    'NEW_ITEM'                                          : 'عنصر جديد',
+    'COMMENTS'                                          : ' التعليقات',
 }

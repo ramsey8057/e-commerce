@@ -105,12 +105,12 @@ lang = {
     'INVALID_ITEM_IMAGE_ERR_MSG'                        : 'The item image field should contain only images',
     'UPDATE_ITEM_DONE_MSG'                              : 'Item updated successfully',
     'UPDATE_ITEM_FAILED_MSG'                            : 'Update item failed',
-    # HERE
     'MANAGE_ITEMS'                                      : 'Manage Items',
     'ITEM_DELETED'                                      : 'Item Deleted',
     'ITEM_APPROVED'                                     : 'Item Approved',
     'ITEM_ADDING_DATE'                                  : 'Adding date',
     'ADDED_BY'                                          : 'Added By',
     'EDIT_ITEM'                                         : 'Edit Item',
-    'NEW_ITEM'                                          : 'New Item'
+    'NEW_ITEM'                                          : 'New Item',
+    'COMMENTS'                                          : 'Comments',
 }

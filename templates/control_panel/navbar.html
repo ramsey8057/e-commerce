@@ -17,6 +17,9 @@
                     <li class="nav-item"><a class="nav-link" href="/admin/members">
                         {{ args[1]['MEMBERS'] }}
                     </a></li>
+                    <li class="nav-item"><a class="mav-link" href="/admin/comments">
+                        {{ args[1]['COMMENTS'] }}
+                    </a></li>
                     <li class="nav-item"><a class="nav-link" href="#">
                         {{ args[1]['STATISTICS'] }}
                     </a></li>
@@ -32,6 +35,9 @@
                     </a></li>
                     <li class="nav-item"><a class="nav-link" href="/admin/members">
                         {{ args[1]['MEMBERS'] }}
+                    </a></li>
+                    <li class="nav-item"><a class="mav-link" href="/admin/comments">
+                        {{ args[1]['COMMENTS'] }}
                     </a></li>
                     <li class="nav-item"><a class="nav-link" href="#">
                         {{ args[1]['STATISTICS'] }}
@@ -49,6 +55,28 @@
                     <li class="nav-item active"><a class="nav-link" href="/admin/members">
                         {{ args[1]['MEMBERS'] }} <span class="sr-only">(current)</span>
                     </a></li>
+                    <li class="nav-item"><a class="mav-link" href="/admin/comments">
+                        {{ args[1]['COMMENTS'] }}
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">
+                        {{ args[1]['STATISTICS'] }}
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">
+                        {{ args[1]['LOGS'] }}
+                    </a></li>
+                {% elif args[2] == 'comments' %}
+                    <li class="nav-item"><a class="nav-link" href="/admin/categories">
+                        {{ args[1]['CATEGORIES'] }}
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/items">
+                        {{ args[1]['ITEMS'] }}
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/members">
+                        {{ args[1]['MEMBERS'] }}
+                    </a></li>
+                    <li class="nav-item active"><a class="mav-link" href="/admin/comments">
+                        {{ args[1]['COMMENTS'] }} <span class="sr-only">(current)</span>
+                    </a></li>
                     <li class="nav-item"><a class="nav-link" href="#">
                         {{ args[1]['STATISTICS'] }}
                     </a></li>
@@ -64,6 +92,9 @@
                     </a></li>
                     <li class="nav-item"><a class="nav-link" href="/admin/members">
                         {{ args[1]['MEMBERS'] }}
+                    </a></li>
+                    <li class="nav-item"><a class="mav-link" href="/admin/comments">
+                        {{ args[1]['COMMENTS'] }}
                     </a></li>
                     <li class="nav-item active"><a class="nav-link" href="#">
                         {{ args[1]['STATISTICS'] }} <span class="sr-only">(current)</span>
@@ -81,6 +112,9 @@
                     <li class="nav-item"><a class="nav-link" href="/admin/members">
                         {{ args[1]['MEMBERS'] }}
                     </a></li>
+                    <li class="nav-item"><a class="mav-link" href="/admin/comments">
+                        {{ args[1]['COMMENTS'] }}
+                    </a></li>
                     <li class="nav-item"><a class="nav-link" href="#">
                         {{ args[1]['STATISTICS'] }}
                     </a></li>
@@ -96,6 +130,9 @@
                     </a></li>
                     <li class="nav-item"><a class="nav-link" href="/admin/members">
                         {{ args[1]['MEMBERS'] }}
+                    </a></li>
+                    <li class="nav-item"><a class="mav-link" href="/admin/comments">
+                        {{ args[1]['COMMENTS'] }}
                     </a></li>
                     <li class="nav-item"><a class="nav-link" href="#">
                         {{ args[1]['STATISTICS'] }}
