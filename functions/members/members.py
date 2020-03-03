@@ -1,4 +1,4 @@
-from functions.database.db import *
+from functions.database.db import connect_to_db, execute_dml_query, execute_dql_query
 
 
 def check_user_for_log_in(username, password):

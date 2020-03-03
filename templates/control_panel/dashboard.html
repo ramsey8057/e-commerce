@@ -40,7 +40,7 @@
                 <div class="col-md-3">
                     <div class="stat st-comments">
                         {{ dictionary['TOTAL_COMMENTS'] }}
-                        <span>0</span>
+                        <span><a href="/admin/items">0</a></span>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,17 @@
                             <i class="fa fa-tag"></i> {{ dictionary['LATEST_ITEMS'] }}
                         </div>
                         <div class="panel-body">
-                            Test
+                            <ul class="list-unstyled latest-users">
+                                {% for i in latest_items %}
+                                    <li>
+                                        {{ i[1] }}&nbsp;
+                                        <span class="btn btn-info pull-right">
+                                            <i class="fa fa-edit"></i>&nbsp;
+                                            <a href="/admin/items?do=edit&item_id={{ i[0] }}">{{ dictionary['EDIT'] }}</a>
+                                        </span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
                 </div>

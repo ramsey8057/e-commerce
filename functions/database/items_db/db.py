@@ -100,3 +100,12 @@ def set_item_image(item_id, item_image):
         )
     )
     return row
+
+
+def get_latest_items():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT item_id, item_name FROM items ORDER BY item_id DESC LIMIT 5'
+    )
+    return row
