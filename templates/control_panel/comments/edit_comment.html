@@ -1,0 +1,60 @@
+{% extends 'control_panel/members/base.html' %}
+
+{% block admin_title %}
+    Edit Comment
+{% endblock %}
+
+{% block admin_css_link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/members/members.css') }}">
+{% endblock %}
+
+{% block admin_content %}
+    <body>
+        {% with args=[session['fullname'], dictionary, 'comments', user_id] %}
+            {% include 'control_panel/navbar.html' %}
+        {% endwith %}
+        <h1 class="text-center">{{ dictionary['EDIT_COMMENT'] }}</h1>
+        <div class="container">
+            {% if edit_done == 'True' %}
+                <div class="alert alert-success" role="alert">
+                {{ dictionary['UPDATE_COMMENT_DONE_MSG'] }} :)
+                </div>
+            {% elif edit_done == 'False' %}
+                {% if err_msg %}
+                    <div class="alert alert-danger" role="alert">
+                    {{ err_msg }} :(
+                    </div>
+                    {% if note %}
+                        <div class="alert alert-warning" role="alert">
+                        {{ note }}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                    {{ dictionary['UPDATE_COMMENT_FAILED_MSG'] }} :(
+                    </div>
+                {% endif %}
+            {% endif %}
+            <form action="comments/edit_comment" method="POST" class="form-horizontal">
+                <!-- comment id -->
+                <input type="hidden" value="{{ comment_id }}" name="id" />
+                <!-- comment field -->
+                <div class="form-group form-group-lg">
+                    <label class="col-sm-2 control-label">Comment</label>
+                    <div class="col-sm-10 col-md-6">
+                        <textarea class="form-control" name="comment">
+                            {{ comment_data[1] }}
+                        </textarea>
+                    </div>
+                </div>
+                <div class="form-group form-group-lg">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" value="{{ dictionary['EDIT_COMMENT'] }}" class="btn btn-primary btn-lg" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+{% endblock %}

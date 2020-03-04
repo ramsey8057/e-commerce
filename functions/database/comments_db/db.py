@@ -7,7 +7,7 @@ def get_all_comments():
         con,
         '''
         SELECT
-            c.item_id,
+            c.comment_id,
             c.comment,
             i.item_name,
             u.username,
@@ -25,6 +25,26 @@ def del_comment(comment_id):
     row = execute_dml_query(
         con,
         'DELETE FROM comments WHERE comment_id={}'.format(
+            comment_id
+        )
+    )
+    return row
+
+
+def get_comments_count():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT COUNT(comment_id) FROM comments'
+    )
+    return row[0][0]
+
+
+def get_comment(comment_id):
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        'SELECT comment_id, comment FROM comments WHERE comment_id={}'.format(
             comment_id
         )
     )

@@ -5,7 +5,8 @@ from functions.languages.arabic import lang as ar
 from functions.languages.english import lang as en
 from functions.database.members_db.db import get_member_id
 from functions.database.categories_db.db import get_categories_names
-from functions.database.items_db.db import get_item, get_new_item_id, connect_to_db, get_all_items, del_item, set_item_image, get_item_image
+from functions.database.items_db.db import get_item, get_new_item_id, connect_to_db, get_all_items, del_item,\
+                                            set_item_image, get_item_image
 from functions.members.members import check_user
 from functions.database.db import execute_dml_query
 
@@ -27,13 +28,13 @@ def items():
                 lang = en
             do = request.args.get('do')
             if do is None:
-                items = get_all_items()
+                all_items = get_all_items()
                 deleted = request.args.get('deleted')
                 return render_template(
                     'control_panel/items/items.html',
                     dictionary=lang,
                     session=request.cookies,
-                    items=items,
+                    items=all_items,
                     deleted=deleted,
                     user_id=user_id,
                 )
@@ -205,14 +206,6 @@ def edit_item():
     current_username = request.cookies.get('username')
     current_password = request.cookies.get('password')
     language = request.cookies.get('language')
-    name = None
-    description = None
-    price = None
-    country_of_manufacture = None
-    image = None
-    status = None
-    category = None
-    id = None
     if language == 'ar':
         lang = ar
     else:
@@ -227,7 +220,7 @@ def edit_item():
             image = request.files.get('image')
             status = request.form.get('status')
             category = request.form.get('category')
-            id = request.form.get('id')
+            item_id = request.form.get('id')
             # validate the inputs
             if status == 0:
                 raise Exception('invalid item status')
@@ -237,13 +230,13 @@ def edit_item():
                         # change the picture name to a unique one
                         name_array = image.filename.split('.')
                         file_extension = name_array[len(name_array) - 1]
-                        image.filename = 'item_{}_image.{}'.format(id, file_extension)
+                        image.filename = 'item_{}_image.{}'.format(item_id, file_extension)
                         # create the image path
                         image_path = os.path.join(images_path, image.filename)
                         # delete the old image
-                        os.remove(os.path.join(os.getcwd(), get_item_image(id)))
+                        os.remove(os.path.join(os.getcwd(), get_item_image(item_id)))
                         # set the new item image
-                        print(set_item_image(id, image_path))
+                        print(set_item_image(item_id, image_path))
                         # save image to files
                         image.save(os.path.join(os.getcwd(), image_path))
                         try:
@@ -281,7 +274,7 @@ def edit_item():
                     country_of_manufacture,
                     status,
                     category,
-                    id
+                    item_id
                 )
             )
             # close the database connection
@@ -291,7 +284,7 @@ def edit_item():
                         '.items',
                         do='edit',
                         edit_done=True,
-                        item_id=id
+                        item_id=item_id
                     )
                 )
             else:
@@ -300,7 +293,7 @@ def edit_item():
                         '.items',
                         do='edit',
                         edit_done=False,
-                        item_id=id
+                        item_id=item_id
                     )
                 )
         else:

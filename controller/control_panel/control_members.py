@@ -1,11 +1,11 @@
 import hashlib
 import datetime
-from flask import Blueprint, render_template, abort, redirect, url_for, request, make_response
+from flask import Blueprint, render_template, abort, redirect, url_for, request
 from functions.languages.english import lang as en
 from functions.languages.arabic import lang as ar
-from functions.database.db import connect_to_db, execute_dml_query, execute_dql_query
-from functions.database.items_db.db import get_items_count
-from functions.database.members_db.db import get_member_id, get_all_members, get_member, get_new_member_id, ac_member, del_member
+from functions.database.db import connect_to_db, execute_dml_query
+from functions.database.members_db.db import get_member_id, get_all_members, get_member, get_new_member_id, ac_member,\
+                                            del_member
 from functions.members.members import check_user
 
 control_members = Blueprint('control_members', __name__, template_folder='templates')
