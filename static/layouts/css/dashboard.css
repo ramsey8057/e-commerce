@@ -14,6 +14,19 @@ h1 {
     font-size: 15px;
     color: #FFF;
     border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.home-stats .stat i {
+    position: absolute;
+    font-size: 80px;
+    top: 35px;
+    left: 30px;
+}
+
+.home-stats .stat .info {
+    float: right;
 }
 
 .home-stats .stat a {
@@ -34,6 +47,15 @@ h1 {
 
 .latest {
     margin-top: 40px;
+}
+
+.latest .toggle-info {
+    color: #999;
+    cursor: pointer;
+}
+
+.latest .toggle-info:hover {
+    color: #444;
 }
 
 .panel {

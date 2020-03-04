@@ -1,14 +1,16 @@
-$(function() {
+/*jshint esversion: 6 */
+
+$(() => {
 
     'use strict';
 
     // hide placeholder on form focus
-    $('[placeholder]').focus(function () {
+    $('[placeholder]').focus(() => {
 
         $(this).attr('data-text', $(this).attr('placeholder'));
         $(this).attr('placeholder', '');
 
-    }).blur(function () {
+    }).blur(() => {
 
         $(this).attr('placeholder', $(this).attr('data-text'));
 
@@ -18,7 +20,7 @@ $(function() {
     const passField = $('.password');
     let visible = false;
 
-    $('.show-password').click(function() {
+    $('.show-password').click(() => {
 
         if(visible) {
 
