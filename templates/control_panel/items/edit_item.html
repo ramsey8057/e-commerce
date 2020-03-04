@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/items/add_item.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/jquery-ui.min.css') }}" >
     <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/jquery.selectBoxIt.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/members/members.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/items/edit_item.css') }}">
 {% endblock %}
 
 {% block admin_content %}
@@ -141,6 +143,30 @@
                     </div>
                 </div>
             </form>
+            <h1 class="text-center manage-comments">{{ dictionary['MANAGE'] }} "{{ item_data[1] }}" {{ dictionary['COMMENTS'] }}</h1>
+            <div class="table-responsive">
+                <table class="main-table text-center table table-bordered">
+                    <tr>
+                        <td>#ID</td>
+                        <td>{{ dictionary['COMMENT'] }}</td>
+                        <td>{{ dictionary['USERNAME'] }}</td>
+                        <td>{{ dictionary['COMMENT_DATE'] }}</td>
+                        <td>{{ dictionary['CONTROL'] }}</td>
+                    </tr>
+                    {% for i in comments %}
+                        <tr>
+                            <td>{{ i[0] }}</td>
+                            <td>{{ i[1] }}</td>
+                            <td>{{ i[2] }}</td>
+                            <td>{{ i[3] }}</td>
+                            <td>
+                                <a href="?do=edit&comment_id={{ i[0] }}" class="btn btn-info"><i class="fa fa-edit"></i> {{ dictionary['EDIT'] }}</a>
+                                <a href="?do=delete&comment_id={{ i[0] }}" class="btn btn-danger activate"><i class="fa fa-times"></i> {{ dictionary['DELETE'] }}</a>
+                            </td>
+                        <tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </body>
 {% endblock %}

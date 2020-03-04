@@ -49,3 +49,23 @@ def get_comment(comment_id):
         )
     )
     return row
+
+
+def get_item_comments(item_id):
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        '''
+        SELECT
+            c.comment_id,
+            c.comment,
+            u.username,
+            c.comment_date
+        FROM comments c
+        join users u ON (c.user_id = u.user_id)
+        WHERE c.item_id = {}
+        '''.format(
+            item_id
+        )
+    )
+    return row

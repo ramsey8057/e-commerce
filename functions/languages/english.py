@@ -120,4 +120,5 @@ lang = {
     'EDIT_COMMENT': 'Edit Comment',
     'UPDATE_COMMENT_DONE_MSG': 'User updated successfully',
     'UPDATE_COMMENT_FAILED_MSG': 'Update comment failed',
+    'MANAGE': 'Manage',
 }

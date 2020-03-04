@@ -7,6 +7,7 @@ from functions.database.members_db.db import get_member_id
 from functions.database.categories_db.db import get_categories_names
 from functions.database.items_db.db import get_item, get_new_item_id, connect_to_db, get_all_items, del_item,\
                                             set_item_image, get_item_image
+from functions.database.comments_db.db import get_item_comments
 from functions.members.members import check_user
 from functions.database.db import execute_dml_query
 
@@ -40,6 +41,7 @@ def items():
                 )
             elif do == 'edit':
                 item_id = request.args.get('item_id')
+                item_comments = get_item_comments(item_id)
                 item_data = get_item(item_id)
                 edit_done = request.args.get('edit_done')
                 err_msg = request.args.get('err_msg')
@@ -54,7 +56,8 @@ def items():
                     note=note,
                     item_id=item_id,
                     categories=get_categories_names(),
-                    user_id=user_id
+                    user_id=user_id,
+                    comments=item_comments
                 )
             elif do == 'add':
                 add_done = request.args.get('add_done')

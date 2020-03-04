@@ -9,11 +9,11 @@ $(() => {
 
         if($(this).hasClass('selected')) {
 
-            $(this).html('<i class="fa fa-minus"></i>');
+            $(this).html('<i class="fa fa-plus"></i>');
 
         } else {
 
-            $(this).html('<i class="fa fa-plus"></i>');
+            $(this).html('<i class="fa fa-minus"></i>');
 
         }
 

@@ -42,6 +42,7 @@ h1 {
 }
 
 .categories .category:hover .hidden-buttons {
+    opacity: 1;
     right: 10px;
 }
 
@@ -77,6 +78,7 @@ h1 {
 .category .hidden-buttons {
     position: absolute;
     bottom: 5px;
+    opacity: 0;
     right: -200px;
     -webkit-transition: all .5s ease-in-out;
     -moz-transition: all .5s ease-in-out;
