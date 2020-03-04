@@ -3,6 +3,7 @@ from controller.control_panel.control_members import control_members
 from controller.control_panel.control_categories import control_categories
 from controller.control_panel.control_items import control_items
 from controller.control_panel.control_panel import control_panel
+from controller.control_panel.control_comments import control_comments
 from functions.database.db import create_new_connection
 from general_vars.con import set_con
 
@@ -25,6 +26,7 @@ e_commerce.register_blueprint(control_panel)
 e_commerce.register_blueprint(control_members)
 e_commerce.register_blueprint(control_categories)
 e_commerce.register_blueprint(control_items)
+e_commerce.register_blueprint(control_comments)
 
 # create the index page
 @e_commerce.route('/')

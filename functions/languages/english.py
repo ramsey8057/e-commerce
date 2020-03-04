@@ -113,4 +113,8 @@ lang = {
     'EDIT_ITEM'                                         : 'Edit Item',
     'NEW_ITEM'                                          : 'New Item',
     'COMMENTS'                                          : 'Comments',
+    # HERE
+    'MANAGE_COMMENTS'                                   : 'Manage Comments',
+    'COMMENT'                                           : 'Comment',
+    'COMMENT_DATE'                                      : 'Comment Date',
 }

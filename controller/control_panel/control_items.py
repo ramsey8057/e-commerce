@@ -35,6 +35,7 @@ def items():
                     session=request.cookies,
                     items=items,
                     deleted=deleted,
+                    user_id=user_id,
                 )
             elif do == 'edit':
                 item_id = request.args.get('item_id')
@@ -51,7 +52,8 @@ def items():
                     err_msg=err_msg,
                     note=note,
                     item_id=item_id,
-                    categories=get_categories_names()
+                    categories=get_categories_names(),
+                    user_id=user_id
                 )
             elif do == 'add':
                 add_done = request.args.get('add_done')

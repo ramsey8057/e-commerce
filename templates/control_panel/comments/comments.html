@@ -1,0 +1,58 @@
+{% extends 'control_panel/members/base.html' %}
+
+{% block admin_title %}
+    Comments
+{% endblock %}
+
+{% block admin_css_link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/control_panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layouts/css/members/members.css') }}">
+{% endblock %}
+
+{% block admin_content %}
+    <body>
+        {% with args=[session['fullname'], dictionary, 'comments', user_id] %}
+            {% include 'control_panel/navbar.html' %}
+        {% endwith %}
+        <h1 class="text-center">{{ dictionary['MANAGE_COMMENTS'] }}</h1>
+        <div class="container">
+            {% if deleted != None %}
+                {% if dictionary['lang'] == 'en' %}
+                    <div class="alert alert-success" role="alert">
+                    {{ deleted }} {{ dictionary['ITEM_DELETED'] }} :)
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                    :) {{ dictionary['ITEM_DELETED'] }} {{ deleted }} {{ dictionary['ITEMS'] }}
+                    </div>
+                {% endif %}
+            {% endif %}
+            <div class="table-responsive">
+                <table class="main-table text-center table table-bordered">
+                    <tr>
+                        <td>#ID</td>
+                        <td>{{ dictionary['COMMENT'] }}</td>
+                        <td>{{ dictionary['ITEM_NAME'] }}</td>
+                        <td>{{ dictionary['USERNAME'] }}</td>
+                        <td>{{ dictionary['COMMENT_DATE'] }}</td>
+                        <td>{{ dictionary['CONTROL'] }}</td>
+                    </tr>
+                    <tr>
+                        {% for i in comments %}
+                            <td>{{ i[0] }}</td>
+                            <td>{{ i[1] }}</td>
+                            <td>{{ i[2] }}</td>
+                            <td>{{ i[3] }}</td>
+                            <td>{{ i[4] }}</td>
+                            <td>
+                                <a href="?do=edit&comment_id={{ i[0] }}" class="btn btn-info"><i class="fa fa-edit"></i> {{ dictionary['EDIT'] }}</a>
+                                <a href="?do=delete&comment_id={{ i[0] }}" class="btn btn-danger activate"><i class="fa fa-times"></i> {{ dictionary['DELETE'] }}</a>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+{% endblock %}
