@@ -25,11 +25,11 @@ def index():
                 return redirect(url_for('.dashboard'))
             else:
                 logging_in_failed = request.args.get('logging_in_failed')
-                return render_template('control_panel/members/login.html', logging_in_failed=logging_in_failed)
+                return render_template('control_panel/login.html', logging_in_failed=logging_in_failed)
         else:
             logging_in_failed = request.args.get('logging_in_failed')
             return render_template(
-                'control_panel/members/login.html',
+                'control_panel/login.html',
                 dictionary=lang,
                 logging_in_failed=logging_in_failed
             )
@@ -37,7 +37,7 @@ def index():
         print(e)
         logging_in_failed = request.args.get('logging_in_failed')
         return render_template(
-            'control_panel/members/login.html',
+            'control_panel/login.html',
             dictionary=en,
             logging_in_failed=logging_in_failed
         )
