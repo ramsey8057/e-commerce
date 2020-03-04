@@ -38,8 +38,8 @@
                         <td>{{ dictionary['COMMENT_DATE'] }}</td>
                         <td>{{ dictionary['CONTROL'] }}</td>
                     </tr>
-                    <tr>
-                        {% for i in comments %}
+                    {% for i in comments %}
+                        <tr>
                             <td>{{ i[0] }}</td>
                             <td>{{ i[1] }}</td>
                             <td>{{ i[2] }}</td>
@@ -49,8 +49,8 @@
                                 <a href="?do=edit&comment_id={{ i[0] }}" class="btn btn-info"><i class="fa fa-edit"></i> {{ dictionary['EDIT'] }}</a>
                                 <a href="?do=delete&comment_id={{ i[0] }}" class="btn btn-danger activate"><i class="fa fa-times"></i> {{ dictionary['DELETE'] }}</a>
                             </td>
-                        {% endfor %}
-                    </tr>
+                        <tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>
