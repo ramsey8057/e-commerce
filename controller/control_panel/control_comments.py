@@ -39,7 +39,6 @@ def comments():
                 edit_done = request.args.get('edit_done')
                 err_msg = request.args.get('err_msg')
                 note = request.args.get('note')
-                print(comment_id)
                 return render_template(
                     'control_panel/comments/edit_comment.html',
                     dictionary=lang,
