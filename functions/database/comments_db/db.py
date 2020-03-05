@@ -69,3 +69,21 @@ def get_item_comments(item_id):
         )
     )
     return row
+
+
+def get_latest_comments():
+    con = connect_to_db()
+    row = execute_dql_query(
+        con,
+        '''
+        SELECT
+            u.user_id,
+            c.comment_id,
+            u.username,
+            c.comment
+        FROM comments c
+        JOIN users u ON (c.user_id = u.user_id)
+        LIMIT 5
+        '''
+    )
+    return row

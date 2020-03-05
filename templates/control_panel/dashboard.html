@@ -51,7 +51,7 @@
                         <i class="fa fa-comments"></i>
                         <div class="info">
                             {{ dictionary['TOTAL_COMMENTS'] }}
-                            <span><a href="/admin/items">{{ comments_count }}</a></span>
+                            <span><a href="/admin/comments">{{ comments_count }}</a></span>
                         </div>
                     </div>
                 </div>
@@ -108,6 +108,30 @@
                                     </li>
                                 {% endfor %}
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 latest">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-comments-o"></i> {{ dictionary['LATEST_COMMENTS'] }}
+                            <span class="toggle-info pull-right">
+                                <i class="fa fa-minus fa-lg"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            {% for i in latest_comments %}
+                                <div class="comment-box">
+                                    <span class="member-n"><a href="/admin/members?do=edit&user_id={{ i[0] }}">{{ i[2] }}</a></span>
+                                    <p class="member-c">
+                                        {{ i[3] }}
+                                        <br />
+                                        <a href="/admin/comments?do=edit&comment_id={{ i[1] }}">{{ dictionary['EDIT_THIS_COMMENT'] }}</a>
+                                    </p>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

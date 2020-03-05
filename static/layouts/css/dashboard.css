@@ -115,4 +115,47 @@ h1 {
     background-color: #EEE;
 }
 
+.latest .comment-box {
+    margin: 5px 0 10px;
+}
+
+.latest .comment-box .member-n {
+    width: 80px;
+    text-align: center;
+    margin-right: 20px;
+    position: relative;
+    top: 10px;
+}
+
+.latest .comment-box .member-c {
+    width: calc(100% - 100px);
+    background-color: #EFEFEF;
+    padding: 10px;
+    position: relative;
+    margin-top: 25px;
+    border-radius: 3px;
+}
+
+.latest .comment-box .member-c:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -28px;
+    left: 10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px;
+    border-color: transparent transparent #EFEFEF transparent;
+}
+
+.latest .comment-box a {
+    color: #0076A3;
+    text-decoration: none;
+}
+
+.latest .comment-box a:hover {
+    color: #005886;
+}
+
 /* end dashboard page */

@@ -8,7 +8,7 @@ from functions.members.members import check_user, check_user_for_log_in
 from functions.database.members_db.db import get_members_count, get_pending_members_count,\
                                             get_latest_registered_members, get_member_id, get_member_fullname
 from functions.database.items_db.db import get_items_count, get_latest_items
-from functions.database.comments_db.db import get_comments_count
+from functions.database.comments_db.db import get_comments_count, get_latest_comments
 
 control_panel = Blueprint('control_panel', __name__, template_folder='templates')
 
@@ -120,6 +120,7 @@ def dashboard():
         items_count = get_items_count()
         latest_items = get_latest_items()
         comments_count = get_comments_count()
+        latest_comments = get_latest_comments()
         return render_template(
             'control_panel/dashboard.html',
             dictionary=lang,
@@ -130,7 +131,8 @@ def dashboard():
             user_id=user_id,
             items_count=items_count,
             latest_items=latest_items,
-            comments_count=comments_count
+            comments_count=comments_count,
+            latest_comments=latest_comments
         )
     else:
         return redirect(url_for('.index'))

@@ -49,7 +49,7 @@ lang = {
     'PENDING_MEMBERS': 'Pending Members',
     'TOTAL_ITEMS': 'Total Items',
     'TOTAL_COMMENTS': 'Total Comments',
-    'LATEST_REGISTERED_USERS': 'Latest 5 registered members',
+    'LATEST_REGISTERED_USERS': 'Latest registered members',
     'LATEST_ITEMS': 'Latest items',
     'ACTIVATE': 'Activate',
     'USER_DELETED': 'user deleted',
@@ -121,4 +121,6 @@ lang = {
     'UPDATE_COMMENT_DONE_MSG': 'User updated successfully',
     'UPDATE_COMMENT_FAILED_MSG': 'Update comment failed',
     'MANAGE': 'Manage',
+    'LATEST_COMMENTS': 'Latest comments',
+    'EDIT_THIS_COMMENT': 'Edit this comment',
 }

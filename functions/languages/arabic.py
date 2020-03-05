@@ -49,7 +49,7 @@ lang = {
     'PENDING_MEMBERS': 'الأعضاء المعلقة',
     'TOTAL_ITEMS': 'مجموع البنود',
     'TOTAL_COMMENTS': 'مجموع التعليقات',
-    'LATEST_REGISTERED_USERS': 'أحدث 5 مستخدمين مسجلين',
+    'LATEST_REGISTERED_USERS': 'أحدث مستخدمين مسجلين',
     'LATEST_ITEMS': 'أحدث العناصر',
     'ACTIVATE': 'تفعيل',
     'USER_DELETED': 'تم حذف',
